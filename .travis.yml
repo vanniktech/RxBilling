@@ -1,0 +1,51 @@
+language: android
+
+jdk:
+  - oraclejdk8
+
+before_install:
+  # Install SDK license so Android Gradle plugin can install deps.
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > "$ANDROID_HOME/licenses/android-sdk-license"
+  # Install the rest of tools (e.g., avdmanager)
+  - sdkmanager tools
+  # Install the system image
+  - sdkmanager "system-images;android-18;default;armeabi-v7a"
+  # Create and start emulator for the script. Meant to race the install task.
+  - echo no | avdmanager create avd --force -n test -k "system-images;android-18;default;armeabi-v7a"
+  - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
+
+install: ./gradlew clean assemble assembleAndroidTest --stacktrace
+
+before_script:
+  - android-wait-for-emulator
+  - adb shell input keyevent 82
+
+script: ./gradlew check createDebugCoverageReport --stacktrace
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+  - .buildscript/deploy_snapshot.sh
+
+env:
+  global:
+    - secure: "Qmb6LsSd5ipQDtgU3ejZVpFfep3ETouYMtvy1DLpna8I7UpY+R/7mljWUnsKVwWE5Z+i/GuGEzsFAz5HMYG55CSPOugZXerOcJikWl3lO8Bm3ohavvsKE1ewV3J6ZziaL74QjjmtjHnPJv7mIMtHOfFV134xIOn+C/KSCn2KTIEnq3RtvPmIoUMrVgF727UELqqLOvRDLzAmqpeJsFAxElm6ZW3+2+FSE7EZmpKU+ybeJjXlzehFogyk9eNXXo2kF52AmIH53HTVEk3IWklHFGFpwo0x5lkh/6BSRKb45WLRfEnqCvt5fARrTvWE/taThfm0DO6tThvGJv3IWhbGHzlsq2PAjeE0uLpp7z4upnYnRoPfkBcNmkzPgQs/eC1Z9Rly3tfJlrfFFCB4HXcZWzkUv3mUI+kAlZAUjNvSN5pfCCQE23z+SUMd46Fqmj9ByUztilJrWTYYqBskPs1vRQBPBmgzzYDsEwqnZv8t28TX7VkQT6Qd1YxuCXSLMEI4HEE79gwnyE/SoKgMopOhKQ2zdAF+5jKGJinIJ/hHytvAl1/2uTDByOW/dUH1Yt6vQLbdCOrACvPabbAXeRNFkLIFtIfBBL6JRmkhPs/9Qb72EiJnu8fsdJ8rhT3Z+KZXxn4cSRukKr5raHiw9VKQvw4AJTXcWJUiBpaQ5OdjOvY="
+    - secure: "a10MT3pH+vLK47R57enRcJp0LuWonefbY7YgUQt5W96C9O9mJH1X5GXjPyzZ8LIAxb/xrtv6/um7fZu5SzaUzLAGCfIBVoyENOV5HSOTGuOI1s6NjNHN+uNJPRDD3fdjSSxZ6HMrNN/MbXiUqZcluzm/g+YZ2QoG0jX1poSADfrfs/9f5SKOyUPTtXN9xdaZC+vWyPhIMX34dMxs6KSnGu58Rifo52IGwUy6JOEtbBE9rTqSiNEKVyk2tdltaEILltw5xxsgoA/BxPh9g8UdFesfO9fURIvI0/EjbMqg9ofUENz3TFoVZg3/jQ8wzQ5lcSeRdPQzHJjItZW95mjlH69rjGhTAY48JsAf6bM07mW05Jj3THdTld05ifHYTXiWhIlD66XJv7Vv6xiaXmlgBOUJsmrLEFVBXtm6O5HbF/eV3F3rkMCjQGHjHuMM+wA7aJx221xDGn2hxsSLnTnR9SxS70nHBi3GoDk58NujtthWupu0pQ76lVqRAloAaV7/XZ8DSJlV3e/ip7/r/fpHEf2oqUsrciFD4W5Sbd/MzuLM1v4qPj2nmOUfMUUbj2xd0JnHXM6hYkJJvPXV+s1Wu3IC4QfLzBYDK3s2IU/NpQItn+3mWxhVgGmV0tqFWVKPBQIR71aSi5Z3PKXxfwY4mVg+BAet5fwqrCMI2jdBEu4="
+
+branches:
+  except:
+    - gh-pages
+
+notifications:
+  email: false
+
+sudo: false
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache

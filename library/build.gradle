@@ -1,0 +1,51 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+afterEvaluate {
+  generateReleaseBuildConfig.enabled = false
+}
+
+android {
+  compileSdkVersion 27
+
+  defaultConfig {
+    minSdkVersion 15
+
+    consumerProguardFiles 'proguard-rules.pro'
+
+    testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+  }
+
+  buildTypes {
+    debug {
+      testCoverageEnabled true
+    }
+  }
+}
+
+dependencies {
+  compileOnly deps.autoValue.annotations
+  kapt deps.autoValue.compiler
+
+  api deps.rx.java
+  api deps.support.annotations
+  api deps.navi
+
+  testImplementation deps.assertj3
+  testImplementation deps.junit
+
+  androidTestImplementation deps.assertj2
+  androidTestImplementation deps.support.test.espresso
+  androidTestImplementation deps.support.test.runner
+  androidTestImplementation deps.support.test.rules
+  androidTestImplementation deps.kotlin.stdlib
+}
+
+apply plugin: "com.vanniktech.maven.publish"
+
+configurations.all {
+  resolutionStrategy {
+    force deps.support.annotations
+  }
+}
