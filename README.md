@@ -47,11 +47,16 @@ public interface RxBilling {
 }
 ```
 
-To get an instance of this interface you can use BillingV3.
+The actual [interface](library/src/main/java/com/vanniktech/rxbilling/RxBilling.java) also contains useful Java documentation. To get an instance of this interface you can use [RxBillingV3](library/src/main/java/com/vanniktech/rxbilling/RxBillingV3.java).
 
 ```java
-class YourActivity implements NaviComponent {
-  private RxBilling rxBilling = new RxBillingV3(this);
+class YourActivity extends Activity implements NaviComponent {
+  private RxBilling rxBilling;
+
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate();
+    rxBilling = new RxBillingV3(this);
+  }
 
   @Override public void onDestroy() {
     super.onDestroy();
