@@ -202,7 +202,7 @@ public final class RxBillingV3 implements RxBilling {
 
           emitter.onComplete();
         } else {
-          emitter.onError(new RuntimeException("error " + responseCode));
+          emitter.onError(new RuntimeException("Querying failed with responseCode: " + responseCode));
         }
       }
     }).subscribeOn(scheduler));
