@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+  compileSdkVersion 28
+
+  defaultConfig {
+    minSdkVersion 15
+    testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+  }
+
+  buildTypes {
+    debug {
+      testCoverageEnabled true
+    }
+  }
+}
+
+dependencies {
+  api project(":rxbilling")
+  api deps.navi
+
+  androidTestImplementation deps.assertj2
+  androidTestImplementation deps.support.test.espresso
+  androidTestImplementation deps.support.test.runner
+  androidTestImplementation deps.support.test.rules
+  androidTestImplementation deps.kotlin.stdlib
+}
+
+apply plugin: "com.vanniktech.maven.publish"

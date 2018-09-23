@@ -1,0 +1,16 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+  compileOnly deps.autoValue.annotations
+  kapt deps.autoValue.compiler
+
+  api deps.rx.java
+  api deps.support.annotations
+
+  testImplementation deps.assertj3
+  testImplementation deps.junit
+}
+
+apply plugin: "com.vanniktech.maven.publish"
