@@ -1,6 +1,6 @@
 package com.vanniktech.rxbilling;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import java.math.BigDecimal;
 import java.util.Currency;
 

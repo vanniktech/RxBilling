@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.android.vending.billing.IInAppBillingService;
 import com.trello.navi2.Event;
 import com.trello.navi2.NaviComponent;

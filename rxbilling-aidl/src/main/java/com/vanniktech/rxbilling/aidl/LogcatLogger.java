@@ -1,7 +1,7 @@
 package com.vanniktech.rxbilling.aidl;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
+import androidx.annotation.NonNull;
 import com.vanniktech.rxbilling.Logger;
 
 final class LogcatLogger implements Logger {

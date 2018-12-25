@@ -9,8 +9,8 @@ dependencies {
   api deps.rx.java
   api deps.support.annotations
 
-  testImplementation deps.assertj3
-  testImplementation deps.junit
+  testImplementation deps.test.assertj3
+  testImplementation deps.test.junit
 }
 
 apply plugin: "com.vanniktech.maven.publish"

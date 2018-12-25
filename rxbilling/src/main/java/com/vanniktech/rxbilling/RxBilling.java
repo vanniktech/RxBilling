@@ -1,7 +1,7 @@
 package com.vanniktech.rxbilling;
 
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;

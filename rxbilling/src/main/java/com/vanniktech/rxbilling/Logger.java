@@ -1,6 +1,6 @@
 package com.vanniktech.rxbilling;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public interface Logger {
   void d(@NonNull String log);
