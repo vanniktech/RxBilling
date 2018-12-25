@@ -6,7 +6,7 @@ android {
 
   defaultConfig {
     minSdkVersion 15
-    testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+    testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
   }
 
   buildTypes {
@@ -20,8 +20,8 @@ dependencies {
   api project(":rxbilling")
   api deps.navi
 
-  androidTestImplementation deps.assertj2
-  androidTestImplementation deps.support.test.espresso
+  androidTestImplementation deps.test.assertj2
+  androidTestImplementation deps.support.test.espresso.core
   androidTestImplementation deps.support.test.runner
   androidTestImplementation deps.support.test.rules
   androidTestImplementation deps.kotlin.stdlib

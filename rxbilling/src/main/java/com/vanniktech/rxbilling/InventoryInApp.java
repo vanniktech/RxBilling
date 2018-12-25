@@ -1,6 +1,6 @@
 package com.vanniktech.rxbilling;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.google.auto.value.AutoValue;
 import com.google.auto.value.extension.memoized.Memoized;
 import java.math.BigDecimal;
