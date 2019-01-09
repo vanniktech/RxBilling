@@ -6,9 +6,11 @@ potential-bugs:
   LateinitUsage:
     active: false # We know what we're doing.
 
-style:
-  TopLevelPropertyNaming:
+naming:
+  FunctionMaxLength:
     active: false
+
+style:
   MaxLineLength:
     active: false
 

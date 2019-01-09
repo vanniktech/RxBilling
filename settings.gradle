@@ -1,2 +1,3 @@
 include ':rxbilling'
 include ':rxbilling-aidl'
+include ':rxbilling-testing'
