@@ -6,7 +6,7 @@ I've been using it in my [Chess Clock App](https://play.google.com/store/apps/de
 
 ```groovy
 implementation 'com.vanniktech:rxbilling-aidl:0.2.0'
-implementation 'com.vanniktech:rxbilling-aidl:0.2.0-SNAPSHOT'
+implementation 'com.vanniktech:rxbilling-aidl:0.3.0-SNAPSHOT'
 ```
 
 # Usage
