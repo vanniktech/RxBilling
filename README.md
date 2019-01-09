@@ -2,11 +2,11 @@
 
 Reactive wrapper around the Android Billing API that makes in app purchases and subscriptions really easy to handle. This library does not use the new Google Play Billing Library. Instead it uses the bare bone aidl file.
 
-I've been using it in my [chess clock app](https://play.google.com/store/apps/details?id=com.vanniktech.chessclock) for some months and it has been working nicely.
+I've been using it in my [Chess Clock App](https://play.google.com/store/apps/details?id=com.vanniktech.chessclock) for months and it has been working nicely.
 
 ```groovy
-implementation 'com.vanniktech:rxbilling:0.1.0'
-implementation 'com.vanniktech:rxbilling:0.2.0-SNAPSHOT'
+implementation 'com.vanniktech:rxbilling-aidl:0.2.0'
+implementation 'com.vanniktech:rxbilling-aidl:0.2.0-SNAPSHOT'
 ```
 
 # Usage
@@ -47,7 +47,7 @@ public interface RxBilling {
 }
 ```
 
-The actual [interface](library/src/main/java/com/vanniktech/rxbilling/RxBilling.java) also contains useful Java documentation. To get an instance of this interface you can use [RxBillingV3](library/src/main/java/com/vanniktech/rxbilling/RxBillingV3.java).
+The actual [interface](rxbilling/src/main/java/com/vanniktech/rxbilling/RxBilling.java) also contains useful Java documentation. To get an instance of this interface you can use [RxBillingAidlV3](rxbilling-aidl/src/main/java/com/vanniktech/rxbilling/aidl/RxBillingAidlV3.java).
 
 ```java
 class YourActivity extends Activity implements NaviComponent {
@@ -55,7 +55,7 @@ class YourActivity extends Activity implements NaviComponent {
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate();
-    rxBilling = new RxBillingV3(this);
+    rxBilling = new RxBillingAidlV3(this);
   }
 
   @Override public void onDestroy() {
