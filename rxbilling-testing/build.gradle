@@ -1,0 +1,11 @@
+apply plugin: 'kotlin'
+
+dependencies {
+  api project(":rxbilling")
+
+  testImplementation deps.test.assertj3
+  testImplementation deps.test.junit
+  testImplementation deps.kotlin.stdlib
+}
+
+apply plugin: "com.vanniktech.maven.publish"

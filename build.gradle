@@ -74,7 +74,7 @@ codeQualityTools {
     toolVersion = '2.1.2'
   }
   ktlint {
-    toolVersion = '0.28.0'
+    toolVersion = '0.29.0'
   }
   detekt {
     toolVersion = '1.0.0-RC12'
@@ -100,6 +100,6 @@ subprojects {
 }
 
 wrapper {
-  gradleVersion = '5.0'
+  gradleVersion = '4.10.3'
   distributionType = Wrapper.DistributionType.ALL
 }
