@@ -9,7 +9,7 @@ import java.util.Currency
 
 class InventoryInAppTest {
   @Test fun fromJson() {
-    val expected = InventoryInApp.create("exampleSku", "inapp", "$5.13", 5130000, "USD", "Example Title", "This is an example description")
+    val expected = InventoryInApp.create("exampleSku", "inapp", "$5.13", 5_130_000, "USD", "Example Title", "This is an example description")
     assertThat(CONVERTER_INVENTORY_IN_APP.convert("""
       {
         "productId": "exampleSku",

@@ -15,8 +15,8 @@ import org.assertj.core.api.Java6Assertions.fail
 import org.junit.Test
 
 class MockRxBillingTest {
-  private val inventoryInApp = InventoryInApp.create("custom_themes", "inapp", "3.59", 3590000, "EUR", "title", "description")
-  private val inventorySubscription = InventorySubscription.create("custom_themes", "inapp", "3.59", 3590000, "EUR", "title", "description")
+  private val inventoryInApp = InventoryInApp.create("custom_themes", "inapp", "3.59", 3_590_000, "EUR", "title", "description")
+  private val inventorySubscription = InventorySubscription.create("custom_themes", "inapp", "3.59", 3_590_000, "EUR", "title", "description")
   private val purchaseResponse = PurchaseResponse.create("packageName", "custom_themes", "token", OK, 50)
   private val purchasedInApp = PurchasedInApp.create("packageName", "custom_themes", "token", OK, 50)
   private val purchasedSubscription = PurchasedSubscription.create("packageName", "custom_themes", "token", OK, 50)
