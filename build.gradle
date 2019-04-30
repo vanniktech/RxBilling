@@ -51,12 +51,12 @@ buildscript {
 
   dependencies {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-    classpath 'com.android.tools.build:gradle:3.2.1'
-    classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
+    classpath 'com.android.tools.build:gradle:3.4.0'
+    classpath 'com.github.ben-manes:gradle-versions-plugin:0.21.0'
 
-    classpath 'com.vanniktech:gradle-code-quality-tools-plugin:0.15.0'
-    classpath 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.12.0'
-    classpath 'com.vanniktech:gradle-maven-publish-plugin:0.6.0'
+    classpath 'com.vanniktech:gradle-code-quality-tools-plugin:0.18.0'
+    classpath 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.14.0'
+    classpath 'com.vanniktech:gradle-maven-publish-plugin:0.8.0'
   }
 }
 
@@ -74,10 +74,10 @@ codeQualityTools {
     toolVersion = '2.1.2'
   }
   ktlint {
-    toolVersion = '0.29.0'
+    toolVersion = '0.31.0'
   }
   detekt {
-    toolVersion = '1.0.0-RC12'
+    toolVersion = '1.0.0-RC14'
   }
   cpd {
     enabled = false
@@ -100,6 +100,6 @@ subprojects {
 }
 
 wrapper {
-  gradleVersion = '4.10.3'
+  gradleVersion = '5.4'
   distributionType = Wrapper.DistributionType.ALL
 }

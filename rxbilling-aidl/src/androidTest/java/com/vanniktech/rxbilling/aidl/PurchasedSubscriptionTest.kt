@@ -1,6 +1,7 @@
 package com.vanniktech.rxbilling.aidl
 
 import com.vanniktech.rxbilling.PurchasedSubscription
+import com.vanniktech.rxbilling.RxBilling.BillingResponse
 import com.vanniktech.rxbilling.aidl.JsonConverters.CONVERTER_PURCHASED_SUBSCRIPTION
 import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.Test
@@ -11,9 +12,9 @@ class PurchasedSubscriptionTest {
       {
         "packageName": "com.vanniktech.chessclock",
         "productId": "blub",
-        "purchaseTime": 1524159867627,
+        "purchaseTime": 453,
         "purchaseState": 0,
         "purchaseToken": "token"
-      }""".trimIndent())).isEqualTo(PurchasedSubscription.create("com.vanniktech.chessclock", "blub", "token", 0, 1524159867627))
+      }""".trimIndent())).isEqualTo(PurchasedSubscription.create("com.vanniktech.chessclock", "blub", "token", BillingResponse.OK, 453))
   }
 }

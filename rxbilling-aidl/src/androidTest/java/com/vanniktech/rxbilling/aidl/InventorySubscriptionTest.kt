@@ -9,7 +9,7 @@ import java.util.Currency
 
 class InventorySubscriptionTest {
   @Test fun fromJsonSubs() {
-    val expected = InventorySubscription.create("exampleSku", "subs", "$5.00", 5000000, "USD", "Example Title", "This is an example description")
+    val expected = InventorySubscription.create("exampleSku", "subs", "$5.00", 5_000_000, "USD", "Example Title", "This is an example description")
     assertThat(CONVERTER_INVENTORY_SUBSCRIPTION.convert("""
       {
         "productId": "exampleSku",
