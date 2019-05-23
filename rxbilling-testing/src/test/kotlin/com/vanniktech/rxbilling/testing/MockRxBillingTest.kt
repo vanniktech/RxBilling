@@ -1,7 +1,5 @@
 package com.vanniktech.rxbilling.testing
 
-import com.vanniktech.rxbilling.InventoryInApp
-import com.vanniktech.rxbilling.InventorySubscription
 import com.vanniktech.rxbilling.NoBillingSupportedException
 import com.vanniktech.rxbilling.PurchaseResponse
 import com.vanniktech.rxbilling.PurchasedInApp
@@ -15,8 +13,8 @@ import org.assertj.core.api.Java6Assertions.fail
 import org.junit.Test
 
 class MockRxBillingTest {
-  private val inventoryInApp = InventoryInApp.create("custom_themes", "inapp", "3.59", 3_590_000, "EUR", "title", "description")
-  private val inventorySubscription = InventorySubscription.create("custom_themes", "inapp", "3.59", 3_590_000, "EUR", "title", "description")
+  private val inventoryInApp = MockInventoryInApp("custom_themes", "inapp", "3.59", 3_590_000, "EUR", "title", "description")
+  private val inventorySubscription = MockInventorySubscription("custom_themes", "inapp", "3.59", 3_590_000, "EUR", "title", "description")
   private val purchaseResponse = PurchaseResponse.create("packageName", "custom_themes", "token", OK, 50)
   private val purchasedInApp = PurchasedInApp.create("packageName", "custom_themes", "token", OK, 50)
   private val purchasedSubscription = PurchasedSubscription.create("packageName", "custom_themes", "token", OK, 50)

@@ -19,7 +19,7 @@ public interface Inventory {
    * For example, if price is "€7.99", price_amount_micros is "7990000".
    * This value represents the localized, rounded price for a particular currency.
    */
-  int priceAmountMicros();
+  long priceAmountMicros();
 
   /**
    * @return ISO 4217 currency code for price.
