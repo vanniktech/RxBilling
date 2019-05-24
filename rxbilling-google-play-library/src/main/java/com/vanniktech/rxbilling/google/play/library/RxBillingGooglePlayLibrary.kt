@@ -12,8 +12,8 @@ import com.android.billingclient.api.SkuDetailsParams
 import com.vanniktech.rxbilling.InAppBillingException
 import com.vanniktech.rxbilling.Inventory
 import com.vanniktech.rxbilling.Logger
+import com.vanniktech.rxbilling.PurchaseException
 import com.vanniktech.rxbilling.PurchaseResponse
-import com.vanniktech.rxbilling.PurchaseUserCanceledException
 import com.vanniktech.rxbilling.PurchasedInApp
 import com.vanniktech.rxbilling.PurchasedSubscription
 import com.vanniktech.rxbilling.RxBilling
@@ -95,7 +95,7 @@ import io.reactivex.subjects.PublishSubject
 
             val responseCode = client.launchBillingFlow(activity, params)
 
-            logger.d("ResponseCode $responseCode for purchase $inventory")
+            logger.d("ResponseCode $responseCode for purchase when launching billing flow with $inventory")
 
             emitter.setDisposable(purchaseSubject
                 .takeUntil { (_, purchases) -> purchases?.any { it.sku == inventory.sku() } == true }
@@ -106,8 +106,7 @@ import io.reactivex.subjects.PublishSubject
                       val match = requireNotNull(purchases).first { it.sku == inventory.sku() }
                       emitter.onSuccess(PurchaseResponse.create(match.packageName, match.sku, match.purchaseToken, DEFAULT_PURCHASE_STATE, match.purchaseTime))
                     }
-                    BillingResponse.USER_CANCELED -> emitter.onError(PurchaseUserCanceledException())
-                    else -> Unit // Forward the error upstream or at least log it.
+                    else -> emitter.onError(PurchaseException(code))
                   }
                 }, emitter::onError))
           }
