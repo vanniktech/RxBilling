@@ -2,7 +2,9 @@ apply plugin: 'kotlin'
 
 dependencies {
   api project(":rxbilling")
+}
 
+dependencies {
   testImplementation deps.test.assertj3
   testImplementation deps.test.junit
   testImplementation deps.kotlin.stdlib

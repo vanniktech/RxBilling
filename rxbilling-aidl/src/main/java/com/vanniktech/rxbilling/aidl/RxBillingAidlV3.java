@@ -270,7 +270,7 @@ public final class RxBillingAidlV3 implements RxBilling {
                   final int responseCode = data.getIntExtra(RESPONSE_CODE, 0);
                   final String json = data.getStringExtra(INAPP_PURCHASE_DATA);
 
-                  logger.d("ResultCode: " + activityResult.resultCode() + ", ResponseCode: " + responseCode);
+                  logger.d("ResultCode: " + activityResult.resultCode() + ", ResponseCode: " + responseCode + " for purchase " + inventory);
 
                   if (activityResult.resultCode() == RESULT_OK) {
                     final PurchaseResponse purchaseResponse = CONVERTER_PURCHASE_RESPONSE.convert(json);
@@ -284,6 +284,8 @@ public final class RxBillingAidlV3 implements RxBilling {
                   } else if (activityResult.resultCode() == RESULT_CANCELED) {
                     emitter.onError(new PurchaseUserCanceledException());
                   }
+
+                  // Forward the error upstream or at least log it.
                 } else {
                   logger.e("Intent data is null");
                 }

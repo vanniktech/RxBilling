@@ -1,6 +1,6 @@
-package com.vanniktech.rxbilling
+package com.vanniktech.rxbilling.google.play.library
 
-import com.vanniktech.rxbilling.Utils.asBigDecimal
+import com.vanniktech.rxbilling.google.play.library.Utils.asBigDecimal
 import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.Test
 

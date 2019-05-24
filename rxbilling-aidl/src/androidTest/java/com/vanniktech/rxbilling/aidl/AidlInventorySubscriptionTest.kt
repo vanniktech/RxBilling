@@ -1,15 +1,14 @@
 package com.vanniktech.rxbilling.aidl
 
-import com.vanniktech.rxbilling.InventorySubscription
 import com.vanniktech.rxbilling.aidl.JsonConverters.CONVERTER_INVENTORY_SUBSCRIPTION
 import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.Test
 import java.math.BigDecimal
 import java.util.Currency
 
-class InventorySubscriptionTest {
+class AidlInventorySubscriptionTest {
   @Test fun fromJsonSubs() {
-    val expected = InventorySubscription.create("exampleSku", "subs", "$5.00", 5_000_000, "USD", "Example Title", "This is an example description")
+    val expected = AidlInventorySubscription.create("exampleSku", "subs", "$5.00", 5_000_000, "USD", "Example Title", "This is an example description")
     assertThat(CONVERTER_INVENTORY_SUBSCRIPTION.convert("""
       {
         "productId": "exampleSku",

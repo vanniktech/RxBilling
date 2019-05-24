@@ -31,7 +31,7 @@ final class JsonConverters {
       final String description = jsonObject.getString(DESCRIPTION);
       final int priceAmountMicros = jsonObject.getInt(PRICE_AMOUNT_MICROS);
       final String priceCurrencyCode = jsonObject.getString(PRICE_CURRENCY_CODE);
-      return InventoryInApp.create(sku, type, price, priceAmountMicros, priceCurrencyCode, title, description);
+      return AidlInventoryInApp.create(sku, type, price, priceAmountMicros, priceCurrencyCode, title, description);
     }
   };
 
@@ -45,7 +45,7 @@ final class JsonConverters {
       final String description = jsonObject.getString(DESCRIPTION);
       final int priceAmountMicros = jsonObject.getInt(PRICE_AMOUNT_MICROS);
       final String priceCurrencyCode = jsonObject.getString(PRICE_CURRENCY_CODE);
-      return InventorySubscription.create(sku, type, price, priceAmountMicros, priceCurrencyCode, title, description);
+      return AidlInventorySubscription.create(sku, type, price, priceAmountMicros, priceCurrencyCode, title, description);
     }
   };
 

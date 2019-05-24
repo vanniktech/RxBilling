@@ -1,15 +1,14 @@
 package com.vanniktech.rxbilling.aidl
 
-import com.vanniktech.rxbilling.InventoryInApp
 import com.vanniktech.rxbilling.aidl.JsonConverters.CONVERTER_INVENTORY_IN_APP
 import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.Test
 import java.math.BigDecimal
 import java.util.Currency
 
-class InventoryInAppTest {
+class AidlInventoryInAppTest {
   @Test fun fromJson() {
-    val expected = InventoryInApp.create("exampleSku", "inapp", "$5.13", 5_130_000, "USD", "Example Title", "This is an example description")
+    val expected = AidlInventoryInApp.create("exampleSku", "inapp", "$5.13", 5_130_000, "USD", "Example Title", "This is an example description")
     assertThat(CONVERTER_INVENTORY_IN_APP.convert("""
       {
         "productId": "exampleSku",

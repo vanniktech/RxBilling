@@ -7,6 +7,8 @@ potential-bugs:
     active: false # We know what we're doing.
 
 naming:
+  FunctionMinLength:
+    active: false
   FunctionMaxLength:
     active: false
 
