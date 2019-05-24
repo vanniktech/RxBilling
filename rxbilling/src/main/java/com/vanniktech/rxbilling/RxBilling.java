@@ -56,7 +56,7 @@ public interface RxBilling {
    * You can get an instance of Inventory through the {@link #queryInAppPurchases(String...)} or
    * {@link #querySubscriptions(String...)} method. Make sure that the billing for the type is supported by
    * using {@link #isBillingForInAppSupported()} or {@link #isBillingForSubscriptionsSupported()}.
-   * In case the user canceled the purchase a {@link PurchaseUserCanceledException} will be emitted.
+   * In case of an error a {@link PurchaseException} will be emitted.
    *
    * @param inventory the given inventory to purcahse. Can either be an inapp purcahse or a subscription.
    * @param developerPayload custom developer payload that will be sent with

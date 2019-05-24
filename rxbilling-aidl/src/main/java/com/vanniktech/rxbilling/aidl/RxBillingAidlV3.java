@@ -20,8 +20,8 @@ import com.vanniktech.rxbilling.InventoryInApp;
 import com.vanniktech.rxbilling.InventorySubscription;
 import com.vanniktech.rxbilling.Logger;
 import com.vanniktech.rxbilling.NoBillingSupportedException;
+import com.vanniktech.rxbilling.PurchaseException;
 import com.vanniktech.rxbilling.PurchaseResponse;
-import com.vanniktech.rxbilling.PurchaseUserCanceledException;
 import com.vanniktech.rxbilling.PurchasedInApp;
 import com.vanniktech.rxbilling.PurchasedSubscription;
 import com.vanniktech.rxbilling.RxBilling;
@@ -279,15 +279,15 @@ public final class RxBillingAidlV3 implements RxBilling {
                     if (isWhatWeWant) {
                       emitter.onSuccess(purchaseResponse);
                     } else {
-                      logger.w("Got an activity result for a purchase that we did not order. Please file a bug with reproducible instructions.");
+                      logger.e("Got an activity result for a purchase that we did not order. Please file a bug with reproducible instructions.");
                     }
                   } else if (activityResult.resultCode() == RESULT_CANCELED) {
-                    emitter.onError(new PurchaseUserCanceledException());
+                    emitter.onError(new PurchaseException(BillingResponse.USER_CANCELED));
+                  } else {
+                    logger.e("Illegal state with activityResult " + activityResult + ". Please file a bug with reproducible instructions.");
                   }
-
-                  // Forward the error upstream or at least log it.
                 } else {
-                  logger.e("Intent data is null");
+                  logger.w("Intent data is null");
                 }
               }
             }, new ThrowableConsumer(emitter)));
