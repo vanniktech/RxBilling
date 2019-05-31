@@ -1,7 +1,11 @@
 # Change Log
 
-Version 0.3.0 *(In development)*
---------------------------------
+Version 0.3.0 *(2019-05-31)*
+----------------------------
+
+- Replace PurchaseUserCanceledException with more detailed PurchaseException. [\#13](https://github.com/vanniktech/RxBilling/pull/13) ([vanniktech](https://github.com/vanniktech))
+- Add separate module with Google Play Billing Library implementation. [\#12](https://github.com/vanniktech/RxBilling/pull/12) ([vanniktech](https://github.com/vanniktech))
+- Update dependencies to latest and greatest. [\#11](https://github.com/vanniktech/RxBilling/pull/11) ([vanniktech](https://github.com/vanniktech))
 
 Version 0.2.0 *(2019-01-09)*
 ----------------------------

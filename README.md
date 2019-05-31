@@ -1,13 +1,6 @@
 # RxBilling
 
-Reactive wrapper around the Android Billing API that makes in app purchases and subscriptions really easy to handle. This library does not use the new Google Play Billing Library. Instead it uses the bare bone aidl file.
-
-I've been using it in my [Chess Clock App](https://play.google.com/store/apps/details?id=com.vanniktech.chessclock) for months and it has been working nicely.
-
-```groovy
-implementation 'com.vanniktech:rxbilling-aidl:0.2.0'
-implementation 'com.vanniktech:rxbilling-aidl:0.3.0-SNAPSHOT'
-```
+Reactive wrapper around the Android Billing API that makes in app purchases and subscriptions really easy to handle. I've been using this library in my [apps](https://play.google.com/store/apps/developer?id=Vanniktech) for months and it has been working nicely.
 
 # Usage
 
@@ -47,7 +40,15 @@ public interface RxBilling {
 }
 ```
 
-The actual [interface](rxbilling/src/main/java/com/vanniktech/rxbilling/RxBilling.java) also contains useful Java documentation. To get an instance of this interface you can use [RxBillingAidlV3](rxbilling-aidl/src/main/java/com/vanniktech/rxbilling/aidl/RxBillingAidlV3.java).
+The actual [interface](rxbilling/src/main/java/com/vanniktech/rxbilling/RxBilling.java) also contains documentation.
+
+This library offers two implementations.
+
+### Aidl implementation
+
+```groovy
+implementation 'com.vanniktech:rxbilling-aidl:0.3.0'
+```
 
 ```java
 class YourActivity extends Activity implements NaviComponent {
@@ -65,9 +66,37 @@ class YourActivity extends Activity implements NaviComponent {
 }
 ```
 
-After that you're ready to go and can use any of the function calls to your needs.
+**Note:** Currently the Activity needs to be a [`NaviComponent`](https://github.com/trello/navi/blob/2.x/navi/src/main/java/com/trello/navi2/NaviComponent.java). This is due to the fact that there's no 'Lifecycle' callback for `onActivityResult`.
 
-**Note: Currently the Activity needs to be a [`NaviComponent`](https://github.com/trello/navi/blob/2.x/navi/src/main/java/com/trello/navi2/NaviComponent.java). This is due to the fact that there's no 'Lifecycle' callback for `onActivityResult`. This could be improved though in the future by using a headless Fragment instead.**
+### Google Play Billing Library implementation
+
+```groovy
+implementation 'com.vanniktech:rxbilling-google-play-library:0.3.0'
+```
+
+```java
+class YourActivity extends Activity {
+  private RxBilling rxBilling;
+
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate();
+    rxBilling = new RxBillingGooglePlayLibrary(this);
+  }
+
+  @Override public void onDestroy() {
+    super.onDestroy();
+    rxBilling.destroy();
+  }
+}
+```
+
+### Testing
+
+There's also a dedicated testing artifact.
+
+```groovy
+implementation 'com.vanniktech:rxbilling-testing:0.3.0'
+```
 
 # License
 
