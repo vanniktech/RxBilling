@@ -1,9 +1,8 @@
 package com.vanniktech.rxbilling.google.play.library
 
 import com.android.billingclient.api.BillingClient.BillingResponse
-import org.assertj.core.api.Java6Assertions.assertThat
 import com.vanniktech.rxbilling.RxBilling.BillingResponse as RxBillingResponse
-
+import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.Test
 
 class BillingResponseTest {
