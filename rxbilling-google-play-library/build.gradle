@@ -27,12 +27,12 @@ dependencies {
 }
 
 dependencies {
-  testImplementation deps.test.assertj3
+  testImplementation deps.test.assertj
   testImplementation deps.test.junit
 }
 
 dependencies {
-  androidTestImplementation deps.test.assertj2
+  androidTestImplementation deps.test.assertj
   androidTestImplementation deps.support.test.espresso.core
   androidTestImplementation deps.support.test.runner
   androidTestImplementation deps.support.test.rules

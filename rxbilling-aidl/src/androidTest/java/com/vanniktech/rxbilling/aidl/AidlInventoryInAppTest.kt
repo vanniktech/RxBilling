@@ -1,10 +1,10 @@
 package com.vanniktech.rxbilling.aidl
 
 import com.vanniktech.rxbilling.aidl.JsonConverters.CONVERTER_INVENTORY_IN_APP
-import org.assertj.core.api.Java6Assertions.assertThat
-import org.junit.Test
 import java.math.BigDecimal
 import java.util.Currency
+import org.assertj.core.api.Java6Assertions.assertThat
+import org.junit.Test
 
 class AidlInventoryInAppTest {
   @Test fun fromJson() {

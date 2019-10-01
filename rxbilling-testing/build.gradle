@@ -5,7 +5,7 @@ dependencies {
 }
 
 dependencies {
-  testImplementation deps.test.assertj3
+  testImplementation deps.test.assertj
   testImplementation deps.test.junit
   testImplementation deps.kotlin.stdlib
 }
