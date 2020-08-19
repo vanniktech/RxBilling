@@ -4,13 +4,7 @@ import androidx.annotation.NonNull;
 import java.math.BigDecimal;
 import java.util.Currency;
 
-public interface Inventory {
-  /** @return The product ID for the product. */
-  @NonNull String sku();
-
-  /** @return Value must be inapp for an in-app product or subs for subscriptions. */
-  @NonNull String type();
-
+public interface Inventory extends PurchaseAble {
   /** @return Formatted price of the item, including its currency sign. The price does not include tax. */
   @NonNull String price();
 

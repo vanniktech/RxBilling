@@ -15,11 +15,11 @@ import com.trello.navi2.NaviComponent;
 import com.trello.navi2.model.ActivityResult;
 import com.trello.navi2.rx.RxNavi;
 import com.vanniktech.rxbilling.InAppBillingException;
-import com.vanniktech.rxbilling.Inventory;
 import com.vanniktech.rxbilling.InventoryInApp;
 import com.vanniktech.rxbilling.InventorySubscription;
 import com.vanniktech.rxbilling.Logger;
 import com.vanniktech.rxbilling.NoBillingSupportedException;
+import com.vanniktech.rxbilling.PurchaseAble;
 import com.vanniktech.rxbilling.PurchaseException;
 import com.vanniktech.rxbilling.PurchaseResponse;
 import com.vanniktech.rxbilling.PurchasedInApp;
@@ -244,16 +244,17 @@ public final class RxBillingAidlV3 implements RxBilling {
     }).subscribeOn(scheduler));
   }
 
-  @Override @NonNull @CheckReturnValue public Single<PurchaseResponse> purchase(@NonNull final Inventory inventory, @NonNull final String developerPayload) {
-    logger.d("Trying to purchase " + inventory);
+  @Override @NonNull @CheckReturnValue public Single<PurchaseResponse> purchase(@NonNull final PurchaseAble purchaseAble, @NonNull final String developerPayload) {
+    logger.d("Trying to purchase " + purchaseAble);
 
     return connect().andThen(Single.create(new SingleOnSubscribe<PurchaseResponse>() {
       @Override public void subscribe(@NonNull final SingleEmitter<PurchaseResponse> emitter) throws Exception {
-        final Bundle buyIntentBundle = service.getBuyIntent(API_VERSION, activity.getPackageName(), inventory.sku(), inventory.type(), developerPayload);
+        final Bundle buyIntentBundle = service.getBuyIntent(API_VERSION, activity.getPackageName(), purchaseAble
+            .sku(), purchaseAble.type(), developerPayload);
         final PendingIntent pendingIntent = buyIntentBundle.getParcelable(BUY_INTENT);
 
         if (pendingIntent == null) {
-          emitter.onError(new RuntimeException("Pending buying intent is null for " + inventory + ". Please file a bug with reproducible instructions."));
+          emitter.onError(new RuntimeException("Pending buying intent is null for " + purchaseAble + ". Please file a bug with reproducible instructions."));
           return;
         }
 
@@ -270,11 +271,11 @@ public final class RxBillingAidlV3 implements RxBilling {
                   final int responseCode = data.getIntExtra(RESPONSE_CODE, 0);
                   final String json = data.getStringExtra(INAPP_PURCHASE_DATA);
 
-                  logger.d("ResultCode: " + activityResult.resultCode() + ", ResponseCode: " + responseCode + " for purchase " + inventory);
+                  logger.d("ResultCode: " + activityResult.resultCode() + ", ResponseCode: " + responseCode + " for purchase " + purchaseAble);
 
                   if (activityResult.resultCode() == RESULT_OK) {
                     final PurchaseResponse purchaseResponse = CONVERTER_PURCHASE_RESPONSE.convert(json);
-                    final boolean isWhatWeWant = purchaseResponse.productId().equals(inventory.sku());
+                    final boolean isWhatWeWant = purchaseResponse.productId().equals(purchaseAble.sku());
 
                     if (isWhatWeWant) {
                       emitter.onSuccess(purchaseResponse);

@@ -1,8 +1,8 @@
 package com.vanniktech.rxbilling.testing
 
-import com.vanniktech.rxbilling.Inventory
 import com.vanniktech.rxbilling.InventoryInApp
 import com.vanniktech.rxbilling.InventorySubscription
+import com.vanniktech.rxbilling.PurchaseAble
 import com.vanniktech.rxbilling.PurchaseResponse
 import com.vanniktech.rxbilling.PurchasedInApp
 import com.vanniktech.rxbilling.PurchasedSubscription
@@ -31,7 +31,7 @@ class MockRxBilling(
 
   override fun isBillingForSubscriptionsSupported() = returnIfNotDestroyed { isBillingForSubscriptionsSupported }
 
-  override fun purchase(inventory: Inventory, developerPayload: String) = returnIfNotDestroyed { purchase }
+  override fun purchase(purchaseAble: PurchaseAble, developerPayload: String) = returnIfNotDestroyed { purchase }
 
   override fun getPurchasedInApps() = returnIfNotDestroyed { getPurchasedInApp }
 
