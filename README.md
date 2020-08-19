@@ -47,7 +47,7 @@ This library offers two implementations.
 ### Aidl implementation
 
 ```groovy
-implementation 'com.vanniktech:rxbilling-aidl:0.3.0'
+implementation 'com.vanniktech:rxbilling-aidl:0.4.0'
 ```
 
 ```java
@@ -71,7 +71,7 @@ class YourActivity extends Activity implements NaviComponent {
 ### Google Play Billing Library implementation
 
 ```groovy
-implementation 'com.vanniktech:rxbilling-google-play-library:0.3.0'
+implementation 'com.vanniktech:rxbilling-google-play-library:0.4.0'
 ```
 
 ```java
@@ -95,7 +95,7 @@ class YourActivity extends Activity {
 There's also a dedicated testing artifact.
 
 ```groovy
-implementation 'com.vanniktech:rxbilling-testing:0.3.0'
+implementation 'com.vanniktech:rxbilling-testing:0.4.0'
 ```
 
 # License
