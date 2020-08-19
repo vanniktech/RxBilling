@@ -20,6 +20,7 @@ final class JsonConverters {
   static final String PURCHASE_TOKEN = "purchaseToken";
   static final String PURCHASE_STATE = "purchaseState";
   static final String PURCHASE_TIME = "purchaseTime";
+  static final String ORDER_ID = "orderId";
 
   static final JsonConverter<InventoryInApp> CONVERTER_INVENTORY_IN_APP = new JsonConverter<InventoryInApp>() {
     @Override public InventoryInApp convert(final String json) throws JSONException {
@@ -57,7 +58,8 @@ final class JsonConverters {
       final String purchaseToken = jsonObject.getString(PURCHASE_TOKEN);
       final int purchaseState = jsonObject.getInt(PURCHASE_STATE);
       final long purchaseTime = jsonObject.getLong(PURCHASE_TIME);
-      return PurchasedInApp.create(packageName, productId, purchaseToken, purchaseState, purchaseTime);
+      final String orderId = jsonObject.optString(ORDER_ID, null);
+      return PurchasedInApp.create(packageName, productId, purchaseToken, purchaseState, purchaseTime, orderId);
     }
   };
 
@@ -69,7 +71,8 @@ final class JsonConverters {
       final String purchaseToken = jsonObject.getString(PURCHASE_TOKEN);
       final int purchaseState = jsonObject.getInt(PURCHASE_STATE);
       final long purchaseTime = jsonObject.getLong(PURCHASE_TIME);
-      return PurchasedSubscription.create(packageName, productId, purchaseToken, purchaseState, purchaseTime);
+      final String orderId = jsonObject.optString(ORDER_ID, null);
+      return PurchasedSubscription.create(packageName, productId, purchaseToken, purchaseState, purchaseTime, orderId);
     }
   };
 
@@ -81,7 +84,8 @@ final class JsonConverters {
       final String purchaseToken = jsonObject.getString(PURCHASE_TOKEN);
       final int purchaseState = jsonObject.getInt(PURCHASE_STATE);
       final long purchaseTime = jsonObject.getLong(PURCHASE_TIME);
-      return PurchaseResponse.create(packageName, productId, purchaseToken, purchaseState, purchaseTime);
+      final String orderId = jsonObject.optString(ORDER_ID, null);
+      return PurchaseResponse.create(packageName, productId, purchaseToken, purchaseState, purchaseTime, orderId);
     }
   };
 
