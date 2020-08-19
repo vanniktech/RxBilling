@@ -249,8 +249,7 @@ public final class RxBillingAidlV3 implements RxBilling {
 
     return connect().andThen(Single.create(new SingleOnSubscribe<PurchaseResponse>() {
       @Override public void subscribe(@NonNull final SingleEmitter<PurchaseResponse> emitter) throws Exception {
-        final Bundle buyIntentBundle = service.getBuyIntent(API_VERSION, activity.getPackageName(), purchaseAble
-            .sku(), purchaseAble.type(), developerPayload);
+        final Bundle buyIntentBundle = service.getBuyIntent(API_VERSION, activity.getPackageName(), purchaseAble.sku(), purchaseAble.type(), developerPayload);
         final PendingIntent pendingIntent = buyIntentBundle.getParcelable(BUY_INTENT);
 
         if (pendingIntent == null) {

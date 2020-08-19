@@ -1,26 +1,16 @@
 package com.vanniktech.rxbilling;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.google.auto.value.AutoValue;
-import com.vanniktech.rxbilling.RxBilling.BillingResponse;
 
-@AutoValue public abstract class PurchaseResponse {
-  @NonNull public static PurchaseResponse create(@NonNull final String packageName, @NonNull final String productId, @NonNull final String purchaseToken, @BillingResponse final int purchaseState, final long purchaseTime) {
-    return new AutoValue_PurchaseResponse(packageName, productId, purchaseToken, purchaseState, purchaseTime);
+@SuppressWarnings("PMD.UseObjectForClearerAPI") @AutoValue public abstract class PurchaseResponse implements Purchased {
+  @NonNull public static PurchaseResponse create(@NonNull final String packageName, @NonNull final String productId, @NonNull final String purchaseToken, final int purchaseState, final long purchaseTime) {
+    return create(packageName, productId, purchaseToken, purchaseState, purchaseTime, null);
   }
 
-  /** @return The application package from which the purchase originated. */
-  @NonNull public abstract String packageName();
-
-  /** @return The item's product identifier. Every item has a product ID, which you must specify in the application's product list on the Google Play Console. */
-  @NonNull public abstract String productId();
-
-  /** @return A token that uniquely identifies a purchase for a given item and user pair. */
-  @NonNull public abstract String purchaseToken();
-
-  /** @return The purchase state of the order. */
-  @BillingResponse public abstract int purchaseState();
-
-  /** @return The time the product was purchased, in milliseconds since the epoch (Jan 1, 1970). */
-  public abstract long purchaseTime();
+  @NonNull public static PurchaseResponse create(@NonNull final String packageName, @NonNull final String productId, @NonNull final String purchaseToken, final int purchaseState, final long purchaseTime, @Nullable
+  final String orderId) {
+    return new AutoValue_PurchaseResponse(packageName, productId, purchaseToken, purchaseState, purchaseTime, orderId);
+  }
 }
