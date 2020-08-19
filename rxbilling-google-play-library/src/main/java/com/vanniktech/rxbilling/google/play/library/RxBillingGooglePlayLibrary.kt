@@ -10,8 +10,8 @@ import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsParams
 import com.vanniktech.rxbilling.InAppBillingException
-import com.vanniktech.rxbilling.Inventory
 import com.vanniktech.rxbilling.Logger
+import com.vanniktech.rxbilling.PurchaseAble
 import com.vanniktech.rxbilling.PurchaseException
 import com.vanniktech.rxbilling.PurchaseResponse
 import com.vanniktech.rxbilling.PurchasedInApp
@@ -77,16 +77,16 @@ import io.reactivex.subjects.PublishSubject
   @CheckReturnValue override fun isBillingForSubscriptionsSupported() =
       Completable.complete().subscribeOn(scheduler) // https://issuetracker.google.com/issues/123447114
 
-  @CheckReturnValue override fun purchase(inventory: Inventory, developerPayload: String): Single<PurchaseResponse> {
-    logger.d("Trying to purchase $inventory")
+  @CheckReturnValue override fun purchase(purchaseAble: PurchaseAble, developerPayload: String): Single<PurchaseResponse> {
+    logger.d("Trying to purchase $purchaseAble")
 
     return connect()
         .flatMap { client ->
           Single.create<PurchaseResponse> { emitter ->
-            val skuDetails = when (inventory) {
-              is PlayBillingInventoryInApp -> inventory.skuDetails()
-              is PlayBillingInventorySubscription -> inventory.skuDetails()
-              else -> throw IllegalArgumentException("Please pass an Inventory that you have retrieved from this library")
+            val skuDetails = when (purchaseAble) {
+              is PlayBillingInventoryInApp -> purchaseAble.skuDetails()
+              is PlayBillingInventorySubscription -> purchaseAble.skuDetails()
+              else -> throw IllegalArgumentException("Please pass an PurchaseAble that you have retrieved from this library using #queryInAppPurchases or #querySubscriptions")
             }
 
             val params = BillingFlowParams.newBuilder()
@@ -95,15 +95,15 @@ import io.reactivex.subjects.PublishSubject
 
             val responseCode = client.launchBillingFlow(activity, params)
 
-            logger.d("ResponseCode $responseCode for purchase when launching billing flow with $inventory")
+            logger.d("ResponseCode $responseCode for purchase when launching billing flow with $purchaseAble")
 
             emitter.setDisposable(purchaseSubject
-                .takeUntil { (_, purchases) -> purchases?.any { it.sku == inventory.sku() } == true }
+                .takeUntil { (_, purchases) -> purchases?.any { it.sku == purchaseAble.sku() } == true }
                 .firstOrError()
                 .subscribe({ (code, purchases) ->
                   when (code) {
                     BillingResponse.OK -> {
-                      val match = requireNotNull(purchases).first { it.sku == inventory.sku() }
+                      val match = requireNotNull(purchases).first { it.sku == purchaseAble.sku() }
                       emitter.onSuccess(PurchaseResponse.create(match.packageName, match.sku, match.purchaseToken, DEFAULT_PURCHASE_STATE, match.purchaseTime))
                     }
                     else -> emitter.onError(PurchaseException(code))

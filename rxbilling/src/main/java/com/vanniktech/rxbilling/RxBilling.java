@@ -52,16 +52,16 @@ public interface RxBilling {
   @NonNull @CheckReturnValue Completable isBillingForSubscriptionsSupported();
 
   /**
-   * Purchases the given inventory. which can be an inapp purchase or a subscription.
-   * You can get an instance of Inventory through the {@link #queryInAppPurchases(String...)} or
+   * Purchases the given PurchaseAble, which can be an inapp purchase or a subscription.
+   * You can get an instance of PurchaseAble through the {@link #queryInAppPurchases(String...)} or
    * {@link #querySubscriptions(String...)} method. Make sure that the billing for the type is supported by
    * using {@link #isBillingForInAppSupported()} or {@link #isBillingForSubscriptionsSupported()}.
    * In case of an error a {@link PurchaseException} will be emitted.
    *
-   * @param inventory the given inventory to purcahse. Can either be an inapp purcahse or a subscription.
+   * @param purchaseAble the given PurchaseAble to purchase. Can either be an inapp purchase or a subscription.
    * @param developerPayload custom developer payload that will be sent with
    */
-  @NonNull @CheckReturnValue Single<PurchaseResponse> purchase(@NonNull Inventory inventory,
+  @NonNull @CheckReturnValue Single<PurchaseResponse> purchase(@NonNull PurchaseAble purchaseAble,
       @NonNull String developerPayload);
 
   /**
