@@ -234,10 +234,10 @@ public final class RxBillingAidlV3 implements RxBilling {
         final int responseCode = service.isBillingSupported(API_VERSION, activity.getPackageName(), type);
 
         if (responseCode == OK) {
-          logger.w("Billing is supported");
+          logger.d("Billing is supported");
           emitter.onComplete();
         } else {
-          logger.d("Billing is not supported. Code " + responseCode);
+          logger.w("Billing is not supported. Code " + responseCode);
           emitter.onError(new NoBillingSupportedException(responseCode));
         }
       }
