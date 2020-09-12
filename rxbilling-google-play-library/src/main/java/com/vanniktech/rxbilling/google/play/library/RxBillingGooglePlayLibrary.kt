@@ -14,6 +14,7 @@ import com.vanniktech.rxbilling.Logger
 import com.vanniktech.rxbilling.PurchaseAble
 import com.vanniktech.rxbilling.PurchaseException
 import com.vanniktech.rxbilling.PurchaseResponse
+import com.vanniktech.rxbilling.Purchased
 import com.vanniktech.rxbilling.PurchasedInApp
 import com.vanniktech.rxbilling.PurchasedSubscription
 import com.vanniktech.rxbilling.RxBilling
@@ -113,13 +114,13 @@ import io.reactivex.subjects.PublishSubject
         }.subscribeOn(scheduler)
   }
 
-  @CheckReturnValue override fun consumePurchase(purchasedInApp: PurchasedInApp): Single<Int> {
-    logger.d("Trying to consume purchase $purchasedInApp")
+  @CheckReturnValue override fun consumePurchase(purchased: Purchased): Single<Int> {
+    logger.d("Trying to consume purchase $purchased")
 
     return connect()
         .flatMap { client ->
           Single.create<Int> { emitter ->
-            client.consumeAsync(purchasedInApp.purchaseToken()) { responseCode, _ ->
+            client.consumeAsync(purchased.purchaseToken()) { responseCode, _ ->
               emitter.onSuccess(responseCode)
             }
           }

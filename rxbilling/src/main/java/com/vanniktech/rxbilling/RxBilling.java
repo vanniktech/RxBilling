@@ -79,10 +79,10 @@ public interface RxBilling {
   /**
    * Consumes the given inapp purchase which has been bought.
    *
-   * @param purchasedInApp the purchased in app purchase to consume
+   * @param purchased the purchased object to consume
    * @return Single containing the BillingResponse
    */
-  @NonNull @CheckReturnValue Single<Integer> consumePurchase(@NonNull PurchasedInApp purchasedInApp);
+  @NonNull @CheckReturnValue Single<Integer> consumePurchase(@NonNull Purchased purchased);
 
   /**
    * Destroys the current session and releases all of the references.
