@@ -4,6 +4,7 @@ import com.vanniktech.rxbilling.InventoryInApp
 import com.vanniktech.rxbilling.InventorySubscription
 import com.vanniktech.rxbilling.PurchaseAble
 import com.vanniktech.rxbilling.PurchaseResponse
+import com.vanniktech.rxbilling.Purchased
 import com.vanniktech.rxbilling.PurchasedInApp
 import com.vanniktech.rxbilling.PurchasedSubscription
 import com.vanniktech.rxbilling.RxBilling
@@ -37,7 +38,7 @@ class MockRxBilling(
 
   override fun getPurchasedSubscriptions() = returnIfNotDestroyed { getPurchasedSubscriptions }
 
-  override fun consumePurchase(purchasedInApp: PurchasedInApp) = returnIfNotDestroyed { consumePurchase }
+  override fun consumePurchase(purchased: Purchased) = returnIfNotDestroyed { consumePurchase }
 
   override fun destroy() = returnIfNotDestroyed { destroyed = true }
 

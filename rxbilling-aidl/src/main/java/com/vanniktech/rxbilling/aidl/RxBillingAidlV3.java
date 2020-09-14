@@ -22,6 +22,7 @@ import com.vanniktech.rxbilling.NoBillingSupportedException;
 import com.vanniktech.rxbilling.PurchaseAble;
 import com.vanniktech.rxbilling.PurchaseException;
 import com.vanniktech.rxbilling.PurchaseResponse;
+import com.vanniktech.rxbilling.Purchased;
 import com.vanniktech.rxbilling.PurchasedInApp;
 import com.vanniktech.rxbilling.PurchasedSubscription;
 import com.vanniktech.rxbilling.RxBilling;
@@ -297,12 +298,12 @@ public final class RxBillingAidlV3 implements RxBilling {
     }).subscribeOn(scheduler));
   }
 
-  @Override @NonNull @CheckReturnValue public Single<Integer> consumePurchase(@NonNull final PurchasedInApp purchasedInApp) {
-    logger.d("Trying to consume purchase " + purchasedInApp);
+  @Override @NonNull @CheckReturnValue public Single<Integer> consumePurchase(@NonNull final Purchased purchased) {
+    logger.d("Trying to consume purchase " + purchased);
 
     return connect().andThen(Single.create(new SingleOnSubscribe<Integer>() {
       @Override public void subscribe(@NonNull final SingleEmitter<Integer> emitter) throws Exception {
-        final Integer result = service.consumePurchase(API_VERSION, activity.getPackageName(), purchasedInApp.purchaseToken());
+        final Integer result = service.consumePurchase(API_VERSION, activity.getPackageName(), purchased.purchaseToken());
         emitter.onSuccess(result);
       }
     }));
