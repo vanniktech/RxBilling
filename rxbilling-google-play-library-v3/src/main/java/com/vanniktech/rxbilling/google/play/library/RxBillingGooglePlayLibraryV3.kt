@@ -1,6 +1,7 @@
 package com.vanniktech.rxbilling.google.play.library
 
 import android.app.Activity
+import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.BillingResponseCode
 import com.android.billingclient.api.BillingClient.SkuType
@@ -115,6 +116,24 @@ import io.reactivex.subjects.PublishSubject
                 }, emitter::onError))
           }
         }.subscribeOn(scheduler)
+  }
+
+  @CheckReturnValue override fun acknowledgePurchase(purchased: Purchased): Single<Int> {
+    logger.d("Trying to acknowledge purchase $purchased")
+
+    return connect()
+      .flatMap { client ->
+        Single.create<Int> { emitter ->
+          client.acknowledgePurchase(
+            AcknowledgePurchaseParams.newBuilder()
+              .setPurchaseToken(purchased.purchaseToken())
+              .build()
+          ) { billingResult ->
+            emitter.onSuccess(billingResult.responseCode)
+          }
+        }
+      }
+      .subscribeOn(scheduler)
   }
 
   @CheckReturnValue override fun consumePurchase(purchased: Purchased): Single<Int> {
