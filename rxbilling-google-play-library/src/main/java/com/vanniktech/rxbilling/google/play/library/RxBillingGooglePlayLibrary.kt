@@ -44,7 +44,7 @@ import io.reactivex.subjects.PublishSubject
 
   @CheckReturnValue override fun querySubscriptions(vararg skuIds: String?) = query(SkuType.SUBS, skuIds.toList().filterNotNull(), PlayBillingInventorySubscription::create)
 
-  @CheckReturnValue private fun <T> query(skuType: String, skuList: List<String>, converter: (SkuDetails) -> T): Observable<T> {
+  @CheckReturnValue private fun <T : Any> query(skuType: String, skuList: List<String>, converter: (SkuDetails) -> T): Observable<T> {
     if (skuList.isEmpty()) {
       throw IllegalArgumentException("No ids were passed")
     }
@@ -136,7 +136,7 @@ import io.reactivex.subjects.PublishSubject
     PurchasedSubscription.create(it.packageName, it.sku, it.purchaseToken, DEFAULT_PURCHASE_STATE, it.purchaseTime, it.orderId)
   }
 
-  @CheckReturnValue fun <T> getPurchased(skuType: String, converter: (Purchase) -> T) = connect()
+  @CheckReturnValue fun <T : Any> getPurchased(skuType: String, converter: (Purchase) -> T) = connect()
       .flatMapObservable { client ->
           Observable.create<T> { emitter ->
             client.queryPurchaseHistoryAsync(skuType) { responseCode, purchasesList: List<Purchase>? ->

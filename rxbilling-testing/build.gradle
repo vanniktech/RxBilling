@@ -7,7 +7,6 @@ dependencies {
 dependencies {
   testImplementation deps.test.assertj
   testImplementation deps.test.junit
-  testImplementation deps.kotlin.stdlib
 }
 
 apply plugin: "com.vanniktech.maven.publish"

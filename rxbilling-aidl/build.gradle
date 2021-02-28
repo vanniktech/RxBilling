@@ -22,7 +22,7 @@ dependencies {
   kapt deps.autoValue.compiler
 
   api project(":rxbilling")
-  api deps.navi
+  api "com.trello.navi2:navi:2.1.0"
 }
 
 dependencies {
@@ -35,7 +35,6 @@ dependencies {
   androidTestImplementation deps.support.test.espresso.core
   androidTestImplementation deps.support.test.runner
   androidTestImplementation deps.support.test.rules
-  androidTestImplementation deps.kotlin.stdlib
 }
 
 apply plugin: "com.vanniktech.maven.publish"
