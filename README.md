@@ -1,6 +1,6 @@
 # RxBilling
 
-Reactive wrapper around the Android Billing API that makes in app purchases and subscriptions really easy to handle. I've been using this library in my [apps](https://play.google.com/store/apps/developer?id=Vanniktech) for months and it has been working nicely.
+Reactive wrapper around the Android Billing API that makes in app purchases and subscriptions really easy to handle. I've been using this library in my [apps](https://play.google.com/store/apps/developer?id=Niklas+Baudy) for years and it has been working nicely.
 
 # Usage
 
@@ -42,9 +42,41 @@ public interface RxBilling {
 
 The actual [interface](rxbilling/src/main/java/com/vanniktech/rxbilling/RxBilling.java) also contains documentation.
 
-This library offers two implementations.
+This library offers different implementations.
+
+### Google Play Billing Library v3 implementation
+
+```groovy
+implementation 'com.vanniktech:rxbilling-google-play-library:0.5.0'
+```
+
+```java
+class YourActivity extends Activity {
+  private RxBilling rxBilling;
+
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate();
+    rxBilling = new RxBillingGooglePlayLibraryV3(this);
+  }
+
+  @Override public void onDestroy() {
+    super.onDestroy();
+    rxBilling.destroy();
+  }
+}
+```
+
+### Testing
+
+There's also a dedicated testing artifact.
+
+```groovy
+implementation 'com.vanniktech:rxbilling-testing:0.4.0'
+```
 
 ### Aidl implementation
+
+**This is somewhat deprecated now as Google only allows usage of their Billing Library 3 by November 1, 2021. [Source](https://developer.android.com/google/play/billing/integrate)**
 
 ```groovy
 implementation 'com.vanniktech:rxbilling-aidl:0.4.0'
@@ -68,7 +100,9 @@ class YourActivity extends Activity implements NaviComponent {
 
 **Note:** Currently the Activity needs to be a [`NaviComponent`](https://github.com/trello/navi/blob/2.x/navi/src/main/java/com/trello/navi2/NaviComponent.java). This is due to the fact that there's no 'Lifecycle' callback for `onActivityResult`.
 
-### Google Play Billing Library implementation
+### Google Play Billing Library v1 implementation
+
+**This is somewhat deprecated now as Google only allows usage of their Billing Library 3 by November 1, 2021. [Source](https://developer.android.com/google/play/billing/integrate)**
 
 ```groovy
 implementation 'com.vanniktech:rxbilling-google-play-library:0.4.0'
@@ -88,14 +122,6 @@ class YourActivity extends Activity {
     rxBilling.destroy();
   }
 }
-```
-
-### Testing
-
-There's also a dedicated testing artifact.
-
-```groovy
-implementation 'com.vanniktech:rxbilling-testing:0.4.0'
 ```
 
 # License
