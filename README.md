@@ -22,7 +22,9 @@ public interface RxBilling {
 
   Observable<PurchasedSubscription> getPurchasedSubscriptions();
 
-  Single<Integer> consumePurchase(PurchasedInApp purchasedInApp);
+  Single<Integer> acknowledgePurchase(Purchased purchased);
+
+  Single<Integer> consumePurchase(Purchased purchased);
 
   void destroy();
 

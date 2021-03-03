@@ -117,6 +117,20 @@ class MockRxBillingTest {
         .assertResult(purchasedSubscription)
   }
 
+  @Test fun acknowledgePurchaseDefault() {
+    MockRxBilling()
+        .acknowledgePurchase(purchasedInApp)
+        .test()
+        .assertNoValues()
+  }
+
+  @Test fun acknowledgePurchase() {
+    MockRxBilling(acknowledgePurchase = Single.just(OK))
+        .acknowledgePurchase(purchasedInApp)
+        .test()
+        .assertResult(OK)
+  }
+
   @Test fun consumePurchaseDefault() {
     MockRxBilling()
         .consumePurchase(purchasedInApp)

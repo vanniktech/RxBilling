@@ -77,6 +77,17 @@ public interface RxBilling {
   @NonNull @CheckReturnValue Observable<PurchasedSubscription> getPurchasedSubscriptions();
 
   /**
+   * Acknowledges the given inapp purchase which has been bought.
+   *
+   * Note: This method must only be called when using the rxbilling-google-play-library-v3 library.
+   * Other implementations will simply return BillingResponse.OK as they are not required to acknowledge purchases.
+   *
+   * @param purchased the purchased object to consume
+   * @return Single containing the BillingResponse
+   */
+  @NonNull @CheckReturnValue Single<Integer> acknowledgePurchase(@NonNull Purchased purchased);
+
+  /**
    * Consumes the given inapp purchase which has been bought.
    *
    * @param purchased the purchased object to consume

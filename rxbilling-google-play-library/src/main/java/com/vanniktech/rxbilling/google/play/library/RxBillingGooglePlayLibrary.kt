@@ -114,6 +114,11 @@ import io.reactivex.subjects.PublishSubject
         }.subscribeOn(scheduler)
   }
 
+  override fun acknowledgePurchase(purchased: Purchased): Single<Int> {
+    logger.d("Trying to acknowledge purchase $purchased")
+    return Single.just(RxBilling.BillingResponse.OK)
+  }
+
   @CheckReturnValue override fun consumePurchase(purchased: Purchased): Single<Int> {
     logger.d("Trying to consume purchase $purchased")
 
