@@ -20,7 +20,8 @@ class MockRxBilling(
   private val purchase: Single<PurchaseResponse> = Single.never(),
   private val getPurchasedInApp: Observable<PurchasedInApp> = Observable.never(),
   private val getPurchasedSubscriptions: Observable<PurchasedSubscription> = Observable.never(),
-  private val consumePurchase: Single<Int> = Single.never()
+  private val acknowledgePurchase: Single<Int> = Single.never(),
+  private val consumePurchase: Single<Int> = Single.never(),
 ) : RxBilling {
   private var destroyed = false
 
@@ -37,6 +38,8 @@ class MockRxBilling(
   override fun getPurchasedInApps() = returnIfNotDestroyed { getPurchasedInApp }
 
   override fun getPurchasedSubscriptions() = returnIfNotDestroyed { getPurchasedSubscriptions }
+
+  override fun acknowledgePurchase(purchased: Purchased) = returnIfNotDestroyed { acknowledgePurchase }
 
   override fun consumePurchase(purchased: Purchased) = returnIfNotDestroyed { consumePurchase }
 
