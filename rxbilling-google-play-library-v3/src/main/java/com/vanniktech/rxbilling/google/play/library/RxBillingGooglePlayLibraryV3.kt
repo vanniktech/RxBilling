@@ -13,6 +13,7 @@ import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchaseHistoryRecord
 import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsParams
+import com.vanniktech.rxbilling.BillingResponseUtil.asDebugString
 import com.vanniktech.rxbilling.InAppBillingException
 import com.vanniktech.rxbilling.Logger
 import com.vanniktech.rxbilling.PurchaseAble
@@ -69,7 +70,7 @@ import io.reactivex.subjects.PublishSubject
 
               emitter.onComplete()
             } else {
-              emitter.onError(RuntimeException("Querying failed with responseCode: $billingResult"))
+              emitter.onError(RuntimeException("Querying failed. ResponseCode: ${billingResult.responseCode} (${asDebugString(billingResult.responseCode)}) and message: ${billingResult.debugMessage}"))
             }
           }
         }
@@ -196,7 +197,7 @@ import io.reactivex.subjects.PublishSubject
             logger.d("Connected to BillingClient")
             emitter.onSuccess(client)
           } else {
-            logger.d("Could not connect to BillingClient. ResponseCode: $billingResult")
+            logger.d("Could not connect to BillingClient. ResponseCode: ${billingResult.responseCode} (${asDebugString(billingResult.responseCode)}) and message: ${billingResult.debugMessage}")
             billingClient = null
           }
         }
