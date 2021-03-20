@@ -45,6 +45,7 @@ import org.json.JSONException;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
+import static com.vanniktech.rxbilling.BillingResponseUtil.asDebugString;
 import static com.vanniktech.rxbilling.RxBilling.BillingResponse.OK;
 import static com.vanniktech.rxbilling.aidl.JsonConverters.CONVERTER_INVENTORY_IN_APP;
 import static com.vanniktech.rxbilling.aidl.JsonConverters.CONVERTER_INVENTORY_SUBSCRIPTION;
@@ -215,7 +216,7 @@ public final class RxBillingAidlV3 implements RxBilling {
 
           emitter.onComplete();
         } else {
-          emitter.onError(new RuntimeException("Querying failed with responseCode: " + responseCode));
+          emitter.onError(new RuntimeException("Querying failed. ResponseCode: " + responseCode + " (" + asDebugString(responseCode) + ")"));
         }
       }
     }).subscribeOn(scheduler));
@@ -271,7 +272,7 @@ public final class RxBillingAidlV3 implements RxBilling {
                   final int responseCode = data.getIntExtra(RESPONSE_CODE, 0);
                   final String json = data.getStringExtra(INAPP_PURCHASE_DATA);
 
-                  logger.d("ResultCode: " + activityResult.resultCode() + ", ResponseCode: " + responseCode + " for purchase " + purchaseAble);
+                  logger.d("ResultCode: " + activityResult.resultCode() + ", ResponseCode: " + responseCode + " (" + asDebugString(responseCode) + ") for purchase " + purchaseAble);
 
                   if (activityResult.resultCode() == RESULT_OK) {
                     final PurchaseResponse purchaseResponse = CONVERTER_PURCHASE_RESPONSE.convert(json);
