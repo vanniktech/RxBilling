@@ -52,7 +52,7 @@ buildscript {
 
     classpath 'com.vanniktech:gradle-code-quality-tools-plugin:0.20.0'
     classpath 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.16.0'
-    classpath 'com.vanniktech:gradle-maven-publish-plugin:0.12.0'
+    classpath 'com.vanniktech:gradle-maven-publish-plugin:0.16.0'
   }
 }
 
@@ -73,7 +73,10 @@ codeQualityTools {
     toolVersion = '0.31.0'
   }
   detekt {
-    toolVersion = '1.0.0-RC14'
+    enabled = false
+  }
+  ktlint {
+    toolVersion = '0.34.2'
   }
   cpd {
     enabled = false
@@ -96,6 +99,6 @@ subprojects {
 }
 
 wrapper {
-  gradleVersion = '6.7.1'
+  gradleVersion = '6.8.3'
   distributionType = Wrapper.DistributionType.ALL
 }

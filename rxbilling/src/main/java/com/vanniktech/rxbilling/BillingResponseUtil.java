@@ -1,7 +1,7 @@
 package com.vanniktech.rxbilling;
 
 public final class BillingResponseUtil {
-  public static String asDebugString(@RxBilling.BillingResponse int billingResponse) {
+  @SuppressWarnings("PMD.CyclomaticComplexity") public static String asDebugString(@RxBilling.BillingResponse final int billingResponse) {
     switch (billingResponse) {
       case RxBilling.BillingResponse.OK:
         return "ok";

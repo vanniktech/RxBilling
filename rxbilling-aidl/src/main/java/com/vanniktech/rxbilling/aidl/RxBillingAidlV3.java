@@ -299,9 +299,9 @@ public final class RxBillingAidlV3 implements RxBilling {
     }).subscribeOn(scheduler));
   }
 
-  @Override @NonNull @CheckReturnValue public Single<Integer> acknowledgePurchase(@NonNull Purchased purchased) {
+  @Override @NonNull @CheckReturnValue public Single<Integer> acknowledgePurchase(@NonNull final Purchased purchased) {
     logger.d("Trying to acknowledge purchase " + purchased);
-    return Single.just(RxBilling.BillingResponse.OK);
+    return Single.just(OK);
   }
 
   @Override @NonNull @CheckReturnValue public Single<Integer> consumePurchase(@NonNull final Purchased purchased) {
