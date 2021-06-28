@@ -22,6 +22,7 @@ dependencies {
   kapt deps.autoValue.compiler
 
   api project(":rxbilling")
+  //noinspection AndroidLintGradleDependency
   api "com.android.billingclient:billing:3.0.2"
 }
 

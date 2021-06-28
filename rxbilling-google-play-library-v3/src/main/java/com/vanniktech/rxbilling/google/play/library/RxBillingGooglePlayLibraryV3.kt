@@ -213,7 +213,7 @@ import io.reactivex.subjects.PublishSubject
 
   internal data class PurchasesUpdate(
     val billingResult: BillingResult,
-    val purchases: List<Purchase>?,
+    val purchases: List<Purchase>?
   )
 
   internal companion object {
