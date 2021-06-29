@@ -1,7 +1,13 @@
 # Change Log
 
-Version 0.5.0 *(In development)*
---------------------------------
+Version 0.5.0 *(2021-06-29)*
+----------------------------
+
+- Better error messages including debug description for response code. [\#26](https://github.com/vanniktech/RxBilling/pull/26) ([vanniktech](https://github.com/vanniktech))
+- Implement acknowledgePurchase. [\#25](https://github.com/vanniktech/RxBilling/pull/25) ([vanniktech](https://github.com/vanniktech))
+- New module: rxbilling-google-play-library-v3 [\#24](https://github.com/vanniktech/RxBilling/pull/24) ([vanniktech](https://github.com/vanniktech))
+- RxBilling\#consumePurchase take Purchased abstraction. [\#21](https://github.com/vanniktech/RxBilling/pull/21) ([vanniktech](https://github.com/vanniktech))
+- RxBillingAidlV3: Fix log levels. [\#20](https://github.com/vanniktech/RxBilling/pull/20) ([vanniktech](https://github.com/vanniktech))
 
 Version 0.4.0 *(2020-08-19)*
 ----------------------------

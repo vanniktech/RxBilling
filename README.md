@@ -73,7 +73,7 @@ class YourActivity extends Activity {
 There's also a dedicated testing artifact.
 
 ```groovy
-implementation 'com.vanniktech:rxbilling-testing:0.4.0'
+implementation 'com.vanniktech:rxbilling-testing:0.5.0'
 ```
 
 ### Aidl implementation
@@ -81,7 +81,7 @@ implementation 'com.vanniktech:rxbilling-testing:0.4.0'
 **This is somewhat deprecated now as Google only allows usage of their Billing Library 3 by November 1, 2021. [Source](https://developer.android.com/google/play/billing/integrate)**
 
 ```groovy
-implementation 'com.vanniktech:rxbilling-aidl:0.4.0'
+implementation 'com.vanniktech:rxbilling-aidl:0.5.0'
 ```
 
 ```java
@@ -107,7 +107,7 @@ class YourActivity extends Activity implements NaviComponent {
 **This is somewhat deprecated now as Google only allows usage of their Billing Library 3 by November 1, 2021. [Source](https://developer.android.com/google/play/billing/integrate)**
 
 ```groovy
-implementation 'com.vanniktech:rxbilling-google-play-library:0.4.0'
+implementation 'com.vanniktech:rxbilling-google-play-library:0.5.0'
 ```
 
 ```java
