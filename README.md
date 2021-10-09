@@ -76,32 +76,6 @@ There's also a dedicated testing artifact.
 implementation 'com.vanniktech:rxbilling-testing:0.5.0'
 ```
 
-### Aidl implementation
-
-**This is somewhat deprecated now as Google only allows usage of their Billing Library 3 by November 1, 2021. [Source](https://developer.android.com/google/play/billing/integrate)**
-
-```groovy
-implementation 'com.vanniktech:rxbilling-aidl:0.5.0'
-```
-
-```java
-class YourActivity extends Activity implements NaviComponent {
-  private RxBilling rxBilling;
-
-  @Override public void onCreate(Bundle savedInstanceState) {
-    super.onCreate();
-    rxBilling = new RxBillingAidlV3(this);
-  }
-
-  @Override public void onDestroy() {
-    super.onDestroy();
-    rxBilling.destroy();
-  }
-}
-```
-
-**Note:** Currently the Activity needs to be a [`NaviComponent`](https://github.com/trello/navi/blob/2.x/navi/src/main/java/com/trello/navi2/NaviComponent.java). This is due to the fact that there's no 'Lifecycle' callback for `onActivityResult`.
-
 ### Google Play Billing Library v1 implementation
 
 **This is somewhat deprecated now as Google only allows usage of their Billing Library 3 by November 1, 2021. [Source](https://developer.android.com/google/play/billing/integrate)**

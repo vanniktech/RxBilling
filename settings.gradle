@@ -1,5 +1,4 @@
 include ':rxbilling'
-include ':rxbilling-aidl'
 include ':rxbilling-google-play-library'
 include ':rxbilling-google-play-library-v3'
 include ':rxbilling-testing'
