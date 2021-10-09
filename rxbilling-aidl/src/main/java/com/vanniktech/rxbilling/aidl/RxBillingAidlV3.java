@@ -284,7 +284,7 @@ public final class RxBillingAidlV3 implements RxBilling {
                       logger.e("Got an activity result for a purchase that we did not order. Please file a bug with reproducible instructions.");
                     }
                   } else if (activityResult.resultCode() == RESULT_CANCELED) {
-                    emitter.onError(new PurchaseException(BillingResponse.USER_CANCELED));
+                    emitter.onError(new PurchaseException(purchaseAble.sku(), BillingResponse.USER_CANCELED));
                   } else {
                     logger.e("Illegal state with activityResult " + activityResult + ". Please file a bug with reproducible instructions.");
                   }

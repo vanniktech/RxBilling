@@ -108,7 +108,7 @@ import io.reactivex.subjects.PublishSubject
                       val match = requireNotNull(purchases).first { it.sku == purchaseAble.sku() }
                       emitter.onSuccess(PurchaseResponse.create(match.packageName, match.sku, match.purchaseToken, DEFAULT_PURCHASE_STATE, match.purchaseTime, match.orderId))
                     }
-                    else -> emitter.onError(PurchaseException(code))
+                    else -> emitter.onError(PurchaseException(purchaseAble.sku(), code))
                   }
                 }, emitter::onError))
           }

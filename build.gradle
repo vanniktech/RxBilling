@@ -67,7 +67,7 @@ codeQualityTools {
     toolVersion = '6.0.1'
   }
   errorProne {
-    toolVersion = '2.1.2'
+    enabled = false
   }
   ktlint {
     toolVersion = '0.31.0'
