@@ -76,30 +76,6 @@ There's also a dedicated testing artifact.
 implementation 'com.vanniktech:rxbilling-testing:0.5.0'
 ```
 
-### Google Play Billing Library v1 implementation
-
-**This is somewhat deprecated now as Google only allows usage of their Billing Library 3 by November 1, 2021. [Source](https://developer.android.com/google/play/billing/integrate)**
-
-```groovy
-implementation 'com.vanniktech:rxbilling-google-play-library:0.5.0'
-```
-
-```java
-class YourActivity extends Activity {
-  private RxBilling rxBilling;
-
-  @Override public void onCreate(Bundle savedInstanceState) {
-    super.onCreate();
-    rxBilling = new RxBillingGooglePlayLibrary(this);
-  }
-
-  @Override public void onDestroy() {
-    super.onDestroy();
-    rxBilling.destroy();
-  }
-}
-```
-
 # License
 
 Copyright (C) 2018 Vanniktech - Niklas Baudy
