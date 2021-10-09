@@ -1,6 +1,5 @@
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'com.vanniktech.code.quality.tools'
-apply plugin: 'com.vanniktech.android.junit.jacoco'
 
 buildscript {
   ext.versions = [
@@ -51,7 +50,6 @@ buildscript {
     classpath 'com.github.ben-manes:gradle-versions-plugin:0.36.0'
 
     classpath 'com.vanniktech:gradle-code-quality-tools-plugin:0.20.0'
-    classpath 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.16.0'
     classpath 'com.vanniktech:gradle-maven-publish-plugin:0.16.0'
   }
 }
