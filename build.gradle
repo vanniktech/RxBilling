@@ -1,12 +1,8 @@
-apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'com.vanniktech.code.quality.tools'
-
 buildscript {
   ext.versions = [
-    kotlin: '1.4.31',
-    autoValue: '1.7.4',
-    espresso: '3.1.1',
-    testRules: '1.1.1',
+    kotlin: '1.5.31',
+    autoValue: '1.8.2',
+    testRules: '1.4.0',
   ]
 
   ext.deps = [
@@ -18,11 +14,11 @@ buildscript {
       'annotations': "com.google.auto.value:auto-value-annotations:${versions.autoValue}",
     ],
     'support': [
-      'annotations': 'androidx.annotation:annotation:1.0.1',
+      'annotations': 'androidx.annotation:annotation:1.2.0',
 
       'test': [
         'espresso': [
-          'core': "androidx.test.espresso:espresso-core:${versions.espresso}",
+          'core': "androidx.test.espresso:espresso-core:3.4.0",
         ],
 
         'runner': "androidx.test:runner:${versions.testRules}",
@@ -33,7 +29,6 @@ buildscript {
     'test': [
       'mockito': 'org.mockito:mockito-core:2.23.0',
       'junit': 'junit:junit:4.13.2',
-      'assertj': 'org.assertj:assertj-core:2.9.1',
     ],
     'billing': "com.android.billingclient:billing:1.2.2",
   ]
@@ -46,23 +41,24 @@ buildscript {
 
   dependencies {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-    classpath 'com.android.tools.build:gradle:4.1.2'
-    classpath 'com.github.ben-manes:gradle-versions-plugin:0.36.0'
+    classpath 'com.android.tools.build:gradle:7.0.2'
 
     classpath 'com.vanniktech:gradle-code-quality-tools-plugin:0.20.0'
-    classpath 'com.vanniktech:gradle-maven-publish-plugin:0.16.0'
+    classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
   }
 }
+
+apply plugin: 'com.vanniktech.code.quality.tools'
 
 codeQualityTools {
   lint {
     textReport = true
   }
   checkstyle {
-    toolVersion = '8.7'
+    enabled = false
   }
   pmd {
-    toolVersion = '6.0.1'
+    enabled = false
   }
   errorProne {
     enabled = false
@@ -85,18 +81,10 @@ subprojects {
   repositories {
     mavenCentral()
     google()
-    jcenter()
-  }
-
-  project.plugins.withId("com.android.library") {
-    // TODO replace with https://issuetracker.google.com/issues/72050365 once released.
-    project.android.libraryVariants.all {
-      it.generateBuildConfig.enabled = false
-    }
   }
 }
 
 wrapper {
-  gradleVersion = '6.8.3'
+  gradleVersion = '7.2'
   distributionType = Wrapper.DistributionType.ALL
 }

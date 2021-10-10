@@ -2,6 +2,9 @@ apply plugin: 'java-library'
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
 
+targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_1_8
+
 dependencies {
   api deps.rx.java
   api deps.support.annotations
@@ -11,7 +14,6 @@ dependencies {
 }
 
 dependencies {
-  testImplementation deps.test.assertj
   testImplementation deps.test.junit
 }
 

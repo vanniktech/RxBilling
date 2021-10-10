@@ -8,8 +8,8 @@ import com.vanniktech.rxbilling.RxBilling.BillingResponse.OK
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import org.assertj.core.api.Java6Assertions.assertThat
-import org.assertj.core.api.Java6Assertions.fail
+import org.junit.Assert.assertEquals
+import org.junit.Assert.fail
 import org.junit.Test
 
 class MockRxBillingTest {
@@ -154,7 +154,7 @@ class MockRxBillingTest {
       mock.destroy()
       fail("Should have thrown")
     } catch (e: UnsupportedOperationException) {
-      assertThat(e).hasMessage("RxBilling instance has been destroyed already")
+      assertEquals("RxBilling instance has been destroyed already", e.message)
     }
   }
 
@@ -166,9 +166,10 @@ class MockRxBillingTest {
     try {
       mock.isBillingForInAppSupported
           .test()
+          .assertResult()
       fail("Should have thrown")
     } catch (e: UnsupportedOperationException) {
-      assertThat(e).hasMessage("RxBilling instance has been destroyed already")
+      assertEquals("RxBilling instance has been destroyed already", e.message)
     }
   }
 }
