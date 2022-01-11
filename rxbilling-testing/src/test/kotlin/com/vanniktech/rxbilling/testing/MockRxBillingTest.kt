@@ -1,9 +1,6 @@
 package com.vanniktech.rxbilling.testing
 
-import com.vanniktech.rxbilling.NoBillingSupportedException
-import com.vanniktech.rxbilling.PurchaseResponse
-import com.vanniktech.rxbilling.PurchasedInApp
-import com.vanniktech.rxbilling.PurchasedSubscription
+import com.vanniktech.rxbilling.*
 import com.vanniktech.rxbilling.RxBilling.BillingResponse.OK
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -55,10 +52,10 @@ class MockRxBillingTest {
   }
 
   @Test fun isBillingForInAppSupported() {
-    MockRxBilling(isBillingForInAppSupported = Completable.error(NoBillingSupportedException(6)))
+    MockRxBilling(isBillingForInAppSupported = Completable.error(RxBillingNoBillingSupportedException("inapp", 6)))
         .isBillingForInAppSupported
         .test()
-        .assertFailure(NoBillingSupportedException::class.java)
+        .assertFailure(RxBillingNoBillingSupportedException::class.java)
   }
 
   @Test fun isBillingForSubscriptionsSupportedDefault() {
@@ -69,10 +66,10 @@ class MockRxBillingTest {
   }
 
   @Test fun isBillingForSubscriptionsSupported() {
-    MockRxBilling(isBillingForSubscriptionsSupported = Completable.error(NoBillingSupportedException(6)))
+    MockRxBilling(isBillingForSubscriptionsSupported = Completable.error(RxBillingNoBillingSupportedException("subs", 6)))
         .isBillingForSubscriptionsSupported
         .test()
-        .assertFailure(NoBillingSupportedException::class.java)
+        .assertFailure(RxBillingNoBillingSupportedException::class.java)
   }
 
   @Test fun purchaseDefault() {

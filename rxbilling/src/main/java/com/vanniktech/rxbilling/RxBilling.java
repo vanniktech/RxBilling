@@ -18,6 +18,7 @@ public interface RxBilling {
   /**
    * Queries inapp purchases by the given sku ids and emits those one by one and then completes.
    * Make sure that the billing is supported first by using {@link #isBillingForInAppSupported()}.
+   * In case of an error a {@link RxBillingQueryException} will be emitted.
    *
    * @param skuIds the sku ids to query. It should contain at least one id.
    * @return Observable emitting the available queried inapp purchases.
@@ -27,16 +28,18 @@ public interface RxBilling {
   /**
    * Queries subscriptions by the given sku ids and emits those one by one and then completes.
    * Make sure that the billing is supported first by using {@link #isBillingForSubscriptionsSupported()}.
+   * In case of an error a {@link RxBillingQueryException} will be emitted.
    *
    * @param skuIds the sku ids to query. It should contain at least one id.
    * @return Observable emitting the available queried subscriptions.
+   *
    */
   @NonNull @CheckReturnValue Observable<InventorySubscription> querySubscriptions(@NonNull String... skuIds);
 
   /**
    * Checks whether billing for inapp is supported or not.
    * In case it is the Completable will just complete.
-   * Otherwise a {@link NoBillingSupportedException} will be thrown.
+   * Otherwise a {@link RxBillingNoBillingSupportedException} will be thrown.
    *
    * @return Completable which will complete in case it is supported. Otherwise an error will be emitted.
    */
@@ -45,7 +48,7 @@ public interface RxBilling {
   /**
    * Checks whether billing for subscriptions is supported or not.
    * In case it is the Completable will just complete.
-   * Otherwise a {@link NoBillingSupportedException} will be thrown.
+   * Otherwise a {@link RxBillingNoBillingSupportedException} will be thrown.
    *
    * @return Completable which will complete in case it is supported. Otherwise an error will be emitted.
    */
@@ -56,7 +59,7 @@ public interface RxBilling {
    * You can get an instance of PurchaseAble through the {@link #queryInAppPurchases(String...)} or
    * {@link #querySubscriptions(String...)} method. Make sure that the billing for the type is supported by
    * using {@link #isBillingForInAppSupported()} or {@link #isBillingForSubscriptionsSupported()}.
-   * In case of an error a {@link PurchaseException} will be emitted.
+   * In case of an error a {@link RxBillingPurchaseException} will be emitted.
    *
    * @param purchaseAble the given PurchaseAble to purchase. Can either be an inapp purchase or a subscription.
    * @param developerPayload custom developer payload that will be sent with
@@ -67,12 +70,14 @@ public interface RxBilling {
   /**
    * @return all of the inapp purchases that have taken place already on by one and then completes.
    * In case there were none the Observable will just complete.
+   * In case of an error a {@link RxBillingQueryPurchaseHistoryException} will be emitted.
    */
   @NonNull @CheckReturnValue Observable<PurchasedInApp> getPurchasedInApps();
 
   /**
    * @return all of the subscription purchases that have taken place already on by one and then completes.
    * In case there were none the Observable will just complete.
+   * In case of an error a {@link RxBillingQueryPurchaseHistoryException} will be emitted.
    */
   @NonNull @CheckReturnValue Observable<PurchasedSubscription> getPurchasedSubscriptions();
 
