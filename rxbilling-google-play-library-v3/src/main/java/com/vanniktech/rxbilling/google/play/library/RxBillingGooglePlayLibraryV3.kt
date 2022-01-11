@@ -13,16 +13,8 @@ import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchaseHistoryRecord
 import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsParams
+import com.vanniktech.rxbilling.*
 import com.vanniktech.rxbilling.BillingResponseUtil.asDebugString
-import com.vanniktech.rxbilling.InAppBillingException
-import com.vanniktech.rxbilling.Logger
-import com.vanniktech.rxbilling.PurchaseAble
-import com.vanniktech.rxbilling.PurchaseException
-import com.vanniktech.rxbilling.PurchaseResponse
-import com.vanniktech.rxbilling.Purchased
-import com.vanniktech.rxbilling.PurchasedInApp
-import com.vanniktech.rxbilling.PurchasedSubscription
-import com.vanniktech.rxbilling.RxBilling
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -70,7 +62,12 @@ import io.reactivex.subjects.PublishSubject
 
               emitter.onComplete()
             } else {
-              emitter.onError(RuntimeException("Querying failed. ResponseCode: ${billingResult.responseCode} (${asDebugString(billingResult.responseCode)}) and message: ${billingResult.debugMessage}"))
+              emitter.onError(RxBillingQueryException(
+                skuType = skuType,
+                skuList = skuList,
+                responseCode = billingResult.responseCode,
+                debugMessage = billingResult.debugMessage,
+              ))
             }
           }
         }
@@ -112,7 +109,11 @@ import io.reactivex.subjects.PublishSubject
                       val match = requireNotNull(purchases).first { it.sku == purchaseAble.sku() }
                       emitter.onSuccess(PurchaseResponse.create(match.packageName, match.sku, match.purchaseToken, DEFAULT_PURCHASE_STATE, match.purchaseTime, match.orderId))
                     }
-                    else -> emitter.onError(PurchaseException(purchaseAble.sku(), billingResponse.responseCode, billingResponse.debugMessage))
+                    else -> emitter.onError(RxBillingPurchaseException(
+                      sku = purchaseAble.sku(),
+                      responseCode = billingResponse.responseCode,
+                      debugMessage = billingResponse.debugMessage,
+                    ))
                   }
                 }, emitter::onError))
           }
@@ -176,7 +177,10 @@ import io.reactivex.subjects.PublishSubject
 
                 emitter.onComplete()
               } else {
-                emitter.onError(InAppBillingException(billingResult.responseCode, billingResult.debugMessage))
+                emitter.onError(RxBillingQueryPurchaseHistoryException(
+                  responseCode = billingResult.responseCode,
+                  debugMessage = billingResult.debugMessage,
+                ))
               }
             }
           }
