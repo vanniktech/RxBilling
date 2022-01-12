@@ -69,7 +69,7 @@ codeQualityTools {
     enabled = false
   }
   ktlint {
-    toolVersion = '0.34.2'
+    toolVersion = '0.43.2'
   }
   cpd {
     enabled = false
