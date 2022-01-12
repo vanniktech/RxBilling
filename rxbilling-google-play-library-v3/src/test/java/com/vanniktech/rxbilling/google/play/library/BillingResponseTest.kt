@@ -1,9 +1,9 @@
 package com.vanniktech.rxbilling.google.play.library
 
 import com.android.billingclient.api.BillingClient.BillingResponseCode
-import com.vanniktech.rxbilling.RxBilling.BillingResponse as RxBillingResponse
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import com.vanniktech.rxbilling.RxBilling.BillingResponse as RxBillingResponse
 
 class BillingResponseTest {
   @Test fun equality() {

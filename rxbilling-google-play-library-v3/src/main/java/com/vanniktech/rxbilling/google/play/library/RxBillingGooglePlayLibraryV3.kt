@@ -13,8 +13,17 @@ import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchaseHistoryRecord
 import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsParams
-import com.vanniktech.rxbilling.*
 import com.vanniktech.rxbilling.BillingResponseUtil.asDebugString
+import com.vanniktech.rxbilling.Logger
+import com.vanniktech.rxbilling.PurchaseAble
+import com.vanniktech.rxbilling.PurchaseResponse
+import com.vanniktech.rxbilling.Purchased
+import com.vanniktech.rxbilling.PurchasedInApp
+import com.vanniktech.rxbilling.PurchasedSubscription
+import com.vanniktech.rxbilling.RxBilling
+import com.vanniktech.rxbilling.RxBillingPurchaseException
+import com.vanniktech.rxbilling.RxBillingQueryException
+import com.vanniktech.rxbilling.RxBillingQueryPurchaseHistoryException
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -47,77 +56,83 @@ import io.reactivex.subjects.PublishSubject
     }
 
     return connect().flatMapObservable { client ->
-        Observable.create<T> { emitter ->
-          val skuDetailsParams = SkuDetailsParams.newBuilder()
-              .setSkusList(skuList).setType(skuType)
-              .build()
+      Observable.create<T> { emitter ->
+        val skuDetailsParams = SkuDetailsParams.newBuilder()
+          .setSkusList(skuList).setType(skuType)
+          .build()
 
-          client.querySkuDetailsAsync(skuDetailsParams) { billingResult, skuDetailsList: List<SkuDetails>? ->
-            if (billingResult.responseCode == BillingResponseCode.OK) {
-              if (skuDetailsList != null) {
-                for (skuDetail in skuDetailsList) {
-                  emitter.onNext(converter.invoke(skuDetail))
-                }
+        client.querySkuDetailsAsync(skuDetailsParams) { billingResult, skuDetailsList: List<SkuDetails>? ->
+          if (billingResult.responseCode == BillingResponseCode.OK) {
+            if (skuDetailsList != null) {
+              for (skuDetail in skuDetailsList) {
+                emitter.onNext(converter.invoke(skuDetail))
               }
+            }
 
-              emitter.onComplete()
-            } else {
-              emitter.onError(RxBillingQueryException(
+            emitter.onComplete()
+          } else {
+            emitter.onError(
+              RxBillingQueryException(
                 skuType = skuType,
                 skuList = skuList,
                 responseCode = billingResult.responseCode,
                 debugMessage = billingResult.debugMessage,
-              ))
-            }
+              )
+            )
           }
         }
+      }
     }.subscribeOn(scheduler)
   }
 
   @CheckReturnValue override fun isBillingForInAppSupported() =
-      Completable.complete().subscribeOn(scheduler) // https://issuetracker.google.com/issues/123447114
+    Completable.complete().subscribeOn(scheduler) // https://issuetracker.google.com/issues/123447114
 
   @CheckReturnValue override fun isBillingForSubscriptionsSupported() =
-      Completable.complete().subscribeOn(scheduler) // https://issuetracker.google.com/issues/123447114
+    Completable.complete().subscribeOn(scheduler) // https://issuetracker.google.com/issues/123447114
 
   @CheckReturnValue override fun purchase(purchaseAble: PurchaseAble, developerPayload: String): Single<PurchaseResponse> {
     logger.d("Trying to purchase $purchaseAble")
 
     return connect()
-        .flatMap { client ->
-          Single.create<PurchaseResponse> { emitter ->
-            val skuDetails = when (purchaseAble) {
-              is PlayBillingInventoryInApp -> purchaseAble.skuDetails()
-              is PlayBillingInventorySubscription -> purchaseAble.skuDetails()
-              else -> throw IllegalArgumentException("Please pass an PurchaseAble that you have retrieved from this library using #queryInAppPurchases or #querySubscriptions")
-            }
+      .flatMap { client ->
+        Single.create<PurchaseResponse> { emitter ->
+          val skuDetails = when (purchaseAble) {
+            is PlayBillingInventoryInApp -> purchaseAble.skuDetails()
+            is PlayBillingInventorySubscription -> purchaseAble.skuDetails()
+            else -> throw IllegalArgumentException("Please pass an PurchaseAble that you have retrieved from this library using #queryInAppPurchases or #querySubscriptions")
+          }
 
-            val params = BillingFlowParams.newBuilder()
-                .setSkuDetails(skuDetails)
-                .build()
+          val params = BillingFlowParams.newBuilder()
+            .setSkuDetails(skuDetails)
+            .build()
 
-            val responseCode = client.launchBillingFlow(activity, params)
+          val responseCode = client.launchBillingFlow(activity, params)
 
-            logger.d("ResponseCode $responseCode for purchase when launching billing flow with $purchaseAble")
+          logger.d("ResponseCode $responseCode for purchase when launching billing flow with $purchaseAble")
 
-            emitter.setDisposable(purchaseSubject
-                .takeUntil { (_, purchases) -> purchases?.any { it.sku == purchaseAble.sku() } == true }
-                .firstOrError()
-                .subscribe({ (billingResponse, purchases) ->
-                  when (billingResponse.responseCode) {
-                    BillingResponseCode.OK -> {
-                      val match = requireNotNull(purchases).first { it.sku == purchaseAble.sku() }
-                      emitter.onSuccess(PurchaseResponse.create(match.packageName, match.sku, match.purchaseToken, DEFAULT_PURCHASE_STATE, match.purchaseTime, match.orderId))
-                    }
-                    else -> emitter.onError(RxBillingPurchaseException(
+          emitter.setDisposable(
+            purchaseSubject
+              .takeUntil { (_, purchases) -> purchases?.any { it.sku == purchaseAble.sku() } == true }
+              .firstOrError()
+              .subscribe({ (billingResponse, purchases) ->
+                when (billingResponse.responseCode) {
+                  BillingResponseCode.OK -> {
+                    val match = requireNotNull(purchases).first { it.sku == purchaseAble.sku() }
+                    emitter.onSuccess(PurchaseResponse.create(match.packageName, match.sku, match.purchaseToken, DEFAULT_PURCHASE_STATE, match.purchaseTime, match.orderId))
+                  }
+                  else -> emitter.onError(
+                    RxBillingPurchaseException(
                       sku = purchaseAble.sku(),
                       responseCode = billingResponse.responseCode,
                       debugMessage = billingResponse.debugMessage,
-                    ))
-                  }
-                }, emitter::onError))
-          }
-        }.subscribeOn(scheduler)
+                    )
+                  )
+                }
+              }, emitter::onError)
+          )
+        }
+      }.subscribeOn(scheduler)
   }
 
   @CheckReturnValue override fun acknowledgePurchase(purchased: Purchased): Single<Int> {
@@ -142,18 +157,18 @@ import io.reactivex.subjects.PublishSubject
     logger.d("Trying to consume purchase $purchased")
 
     return connect()
-        .flatMap { client ->
-          Single.create<Int> { emitter ->
-            client.consumeAsync(
-              ConsumeParams.newBuilder()
-                .setPurchaseToken(purchased.purchaseToken())
-                .build()
-            ) { billingResult, _ ->
-              emitter.onSuccess(billingResult.responseCode)
-            }
+      .flatMap { client ->
+        Single.create<Int> { emitter ->
+          client.consumeAsync(
+            ConsumeParams.newBuilder()
+              .setPurchaseToken(purchased.purchaseToken())
+              .build()
+          ) { billingResult, _ ->
+            emitter.onSuccess(billingResult.responseCode)
           }
         }
-        .subscribeOn(scheduler)
+      }
+      .subscribeOn(scheduler)
   }
 
   @CheckReturnValue override fun getPurchasedInApps() = getPurchased(SkuType.INAPP) {
@@ -165,33 +180,35 @@ import io.reactivex.subjects.PublishSubject
   }
 
   @CheckReturnValue fun <T : Any> getPurchased(skuType: String, converter: (PurchaseHistoryRecord) -> T) = connect()
-      .flatMapObservable { client ->
-          Observable.create<T> { emitter ->
-            client.queryPurchaseHistoryAsync(skuType) { billingResult: BillingResult, purchasesList: List<PurchaseHistoryRecord>? ->
-              if (billingResult.responseCode == BillingResponseCode.OK) {
-                if (purchasesList != null && purchasesList.isNotEmpty()) {
-                  for (purchase in purchasesList) {
-                    emitter.onNext(converter.invoke(purchase))
-                  }
-                }
-
-                emitter.onComplete()
-              } else {
-                emitter.onError(RxBillingQueryPurchaseHistoryException(
-                  responseCode = billingResult.responseCode,
-                  debugMessage = billingResult.debugMessage,
-                ))
+    .flatMapObservable { client ->
+      Observable.create<T> { emitter ->
+        client.queryPurchaseHistoryAsync(skuType) { billingResult: BillingResult, purchasesList: List<PurchaseHistoryRecord>? ->
+          if (billingResult.responseCode == BillingResponseCode.OK) {
+            if (purchasesList != null && purchasesList.isNotEmpty()) {
+              for (purchase in purchasesList) {
+                emitter.onNext(converter.invoke(purchase))
               }
             }
+
+            emitter.onComplete()
+          } else {
+            emitter.onError(
+              RxBillingQueryPurchaseHistoryException(
+                responseCode = billingResult.responseCode,
+                debugMessage = billingResult.debugMessage,
+              )
+            )
           }
-      }.subscribeOn(scheduler)
+        }
+      }
+    }.subscribeOn(scheduler)
 
   @CheckReturnValue private fun connect() = Single.create<BillingClient> { emitter ->
     if (billingClient == null || billingClient?.isReady == false) {
       val client = BillingClient.newBuilder(activity.application)
-          .setListener { billingResult, purchases -> purchaseSubject.onNext(PurchasesUpdate(billingResult, purchases)) }
-          .enablePendingPurchases()
-          .build()
+        .setListener { billingResult, purchases -> purchaseSubject.onNext(PurchasesUpdate(billingResult, purchases)) }
+        .enablePendingPurchases()
+        .build()
 
       billingClient = client
 

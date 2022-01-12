@@ -6,10 +6,12 @@ sealed class RxBillingException(
   @RxBilling.BillingResponse val responseCode: Int,
   val debugMessage: String,
   messagePrefix: String,
-) : RuntimeException("$messagePrefix with responseCode $responseCode" + when {
-  debugMessage.isBlank() -> ""
-  else -> " and message $debugMessage"
-})
+) : RuntimeException(
+  "$messagePrefix with responseCode $responseCode" + when {
+    debugMessage.isBlank() -> ""
+    else -> " and message $debugMessage"
+  }
+)
 
 class RxBillingNoBillingSupportedException(
   skuType: String,
