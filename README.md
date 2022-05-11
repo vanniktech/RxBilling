@@ -49,7 +49,7 @@ This library offers different implementations.
 ### Google Play Billing Library v3 implementation
 
 ```groovy
-implementation 'com.vanniktech:rxbilling-google-play-library:0.5.0'
+implementation 'com.vanniktech:rxbilling-google-play-library:0.6.0'
 ```
 
 ```java
@@ -73,7 +73,7 @@ class YourActivity extends Activity {
 There's also a dedicated testing artifact.
 
 ```groovy
-implementation 'com.vanniktech:rxbilling-testing:0.5.0'
+implementation 'com.vanniktech:rxbilling-testing:0.6.0'
 ```
 
 # License

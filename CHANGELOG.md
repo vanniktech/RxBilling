@@ -1,7 +1,15 @@
 # Change Log
 
-Version 0.6.0 *(In development)*
---------------------------------
+Version 0.6.0 *(2022-05-11)*
+----------------------------
+
+- Update BillingClient to 3.0.3 [\#36](https://github.com/vanniktech/RxBilling/pull/36) ([vanniktech](https://github.com/vanniktech))
+- Proper consistent Exceptions [\#35](https://github.com/vanniktech/RxBilling/pull/35) ([vanniktech](https://github.com/vanniktech))
+- Update dependencies. [\#34](https://github.com/vanniktech/RxBilling/pull/34) ([vanniktech](https://github.com/vanniktech))
+- Nuke Google Play Library v1 implementation \(as it's being deprecated\) [\#33](https://github.com/vanniktech/RxBilling/pull/33) ([vanniktech](https://github.com/vanniktech))
+- Nuke AIDL implementation \(as it's being deprecated\) [\#32](https://github.com/vanniktech/RxBilling/pull/32) ([vanniktech](https://github.com/vanniktech))
+- PurchaseException: Include sku. [\#30](https://github.com/vanniktech/RxBilling/pull/30) ([vanniktech](https://github.com/vanniktech))
+- Switch to GitHub workflows. [\#28](https://github.com/vanniktech/RxBilling/pull/28) ([vanniktech](https://github.com/vanniktech))
 
 Version 0.5.0 *(2021-06-29)*
 ----------------------------
