@@ -42,7 +42,7 @@ buildscript {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
     classpath 'com.android.tools.build:gradle:7.2.1'
 
-    classpath 'com.vanniktech:gradle-code-quality-tools-plugin:0.20.0'
+    classpath 'com.vanniktech:gradle-code-quality-tools-plugin:0.21.0'
     classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
   }
 }
@@ -57,9 +57,6 @@ codeQualityTools {
     enabled = false
   }
   pmd {
-    enabled = false
-  }
-  errorProne {
     enabled = false
   }
   ktlint {
