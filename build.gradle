@@ -22,7 +22,7 @@ buildscript {
         ],
 
         'runner': "androidx.test:runner:${versions.testRules}",
-        'junitExt': "androidx.test.ext:junit:1.1.0",
+        'junitExt': "androidx.test.ext:junit:1.1.3",
         'rules': "androidx.test:rules:${versions.testRules}",
       ],
     ],
