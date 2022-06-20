@@ -1,6 +1,6 @@
 buildscript {
   ext.versions = [
-    kotlin: '1.6.10',
+    kotlin: '1.7.0',
     autoValue: '1.9',
     testRules: '1.4.0',
   ]
@@ -60,13 +60,11 @@ codeQualityTools {
     enabled = false
   }
   ktlint {
-    toolVersion = '0.31.0'
+    toolVersion = '0.46.0'
+    experimental = true
   }
   detekt {
     enabled = false
-  }
-  ktlint {
-    toolVersion = '0.43.2'
   }
   cpd {
     enabled = false

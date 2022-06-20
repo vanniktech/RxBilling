@@ -11,7 +11,7 @@ data class MockInventorySubscription(
   private val priceAmountMicros: Long,
   private val priceCurrencyCode: String,
   private val title: String,
-  private val description: String
+  private val description: String,
 ) : InventorySubscription {
   override fun sku() = sku
   override fun type() = type
