@@ -71,7 +71,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
 
   @CheckReturnValue private fun <T : Any> query(skuType: String, skuList: List<String>, converter: (ProductDetails) -> List<T>): Observable<T> {
     if (skuList.isEmpty()) {
-      throw IllegalArgumentException("No ids were passed")
+      error("No ids were passed")
     }
 
     val products = skuList.map {
@@ -121,13 +121,13 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
           val productDetails = when (purchaseAble) {
             is PlayBillingInventoryInApp -> purchaseAble.productDetails
             is PlayBillingInventorySubscription -> purchaseAble.productDetails
-            else -> throw IllegalArgumentException("Please pass an PurchaseAble that you have retrieved from this library using #queryInAppPurchases or #querySubscriptions")
+            else -> error("Please pass an PurchaseAble that you have retrieved from this library using #queryInAppPurchases or #querySubscriptions")
           }
 
           val offerToken = when (purchaseAble) {
             is PlayBillingInventoryInApp -> null
             is PlayBillingInventorySubscription -> purchaseAble.offerToken
-            else -> throw IllegalArgumentException("Please pass an PurchaseAble that you have retrieved from this library using #queryInAppPurchases or #querySubscriptions")
+            else -> error("Please pass an PurchaseAble that you have retrieved from this library using #queryInAppPurchases or #querySubscriptions")
           }
 
           val params = BillingFlowParams.newBuilder()
