@@ -6,7 +6,6 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.annotations.CheckReturnValue
 import kotlin.annotation.AnnotationRetention.SOURCE
-import kotlin.annotation.Retention
 
 /**
  * Billing interface for [Google's In-app Billing](https://developer.android.com/google/play/billing/billing_reference.html).
@@ -104,6 +103,9 @@ interface RxBilling {
   /** Possible response codes. */
   @Retention(SOURCE)
   @IntDef(
+    BillingResponse.SERVICE_TIMEOUT,
+    BillingResponse.FEATURE_NOT_SUPPORTED,
+    BillingResponse.SERVICE_DISCONNECTED,
     BillingResponse.OK,
     BillingResponse.USER_CANCELED,
     BillingResponse.SERVICE_UNAVAILABLE,
@@ -116,35 +118,44 @@ interface RxBilling {
   )
   annotation class BillingResponse {
     companion object {
-      /** Success  */
+      /** The request has reached the maximum timeout before Google Play responds. */
+      const val SERVICE_TIMEOUT = -3
+
+      /** Requested feature is not supported by Play Store on the current device. */
+      const val FEATURE_NOT_SUPPORTED = -2
+
+      /** Play Store service is not connected now - potentially transient state. */
+      const val SERVICE_DISCONNECTED = -1
+
+      /** Success. */
       const val OK = 0
 
-      /** User pressed back or canceled a dialog  */
+      /** User pressed back or canceled a dialog. */
       const val USER_CANCELED = 1
 
-      /** Network connection is down  */
+      /** Network connection is down.  */
       const val SERVICE_UNAVAILABLE = 2
 
-      /** Billing API version is not supported for the type requested  */
+      /** Billing API version is not supported for the type requested.  */
       const val BILLING_UNAVAILABLE = 3
 
-      /** Requested product is not available for purchase  */
+      /** Requested product is not available for purchase.  */
       const val ITEM_UNAVAILABLE = 4
 
       /**
        * Invalid arguments provided to the API. This error can also indicate that the application was
        * not correctly signed or properly set up for In-app Billing in Google Play, or does not have
-       * the necessary permissions in its manifest
+       * the necessary permissions in its manifest.
        */
       const val DEVELOPER_ERROR = 5
 
-      /** Fatal error during the API action  */
+      /** Fatal error during the API action. */
       const val ERROR = 6
 
-      /** Failure to purchase since item is already owned  */
+      /** Failure to purchase since item is already owned. */
       const val ITEM_ALREADY_OWNED = 7
 
-      /** Failure to consume since item is not owned  */
+      /** Failure to consume since item is not owned. */
       const val ITEM_NOT_OWNED = 8
     }
   }
