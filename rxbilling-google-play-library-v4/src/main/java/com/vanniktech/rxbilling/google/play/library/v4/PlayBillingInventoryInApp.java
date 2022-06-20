@@ -8,8 +8,6 @@ import com.vanniktech.rxbilling.InventoryInApp;
 import java.math.BigDecimal;
 import java.util.Currency;
 
-import static com.vanniktech.rxbilling.google.play.library.v4.Utils.asBigDecimal;
-
 @SuppressWarnings("PMD.UseObjectForClearerAPI") @AutoValue abstract class PlayBillingInventoryInApp implements InventoryInApp {
   @NonNull public static InventoryInApp create(@NonNull final SkuDetails skuDetails) {
     return new AutoValue_PlayBillingInventoryInApp(skuDetails.getSku(), skuDetails.getType(), skuDetails.getPrice(), skuDetails.getPriceAmountMicros(), skuDetails.getPriceCurrencyCode(),
@@ -21,7 +19,7 @@ import static com.vanniktech.rxbilling.google.play.library.v4.Utils.asBigDecimal
   }
 
   @Override @NonNull @Memoized public BigDecimal priceAsBigDecimal() {
-    return asBigDecimal(priceAmountMicros());
+    return Utils.microsAsBigDecimal(priceAmountMicros());
   }
 
   @NonNull abstract SkuDetails skuDetails();
