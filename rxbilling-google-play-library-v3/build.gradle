@@ -4,6 +4,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
   compileSdkVersion 31
+  namespace "com.vanniktech.rxbilling.google.play.library"
 
   defaultConfig {
     minSdkVersion 15
