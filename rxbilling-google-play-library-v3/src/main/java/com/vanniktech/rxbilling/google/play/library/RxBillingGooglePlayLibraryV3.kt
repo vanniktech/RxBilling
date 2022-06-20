@@ -14,6 +14,8 @@ import com.android.billingclient.api.PurchaseHistoryRecord
 import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsParams
 import com.vanniktech.rxbilling.BillingResponseUtil.asDebugString
+import com.vanniktech.rxbilling.InventoryInApp
+import com.vanniktech.rxbilling.InventorySubscription
 import com.vanniktech.rxbilling.Logger
 import com.vanniktech.rxbilling.PurchaseAble
 import com.vanniktech.rxbilling.PurchaseResponse
@@ -46,9 +48,11 @@ import io.reactivex.subjects.PublishSubject
     billingClient = null
   }
 
-  @CheckReturnValue override fun queryInAppPurchases(vararg skuIds: String?) = query(SkuType.INAPP, skuIds.toList().filterNotNull(), PlayBillingInventoryInApp::create)
+  @CheckReturnValue override fun queryInAppPurchases(vararg skuIds: String?): Observable<InventoryInApp> =
+    query(SkuType.INAPP, skuIds.toList().filterNotNull(), ::PlayBillingInventoryInApp)
 
-  @CheckReturnValue override fun querySubscriptions(vararg skuIds: String?) = query(SkuType.SUBS, skuIds.toList().filterNotNull(), PlayBillingInventorySubscription::create)
+  @CheckReturnValue override fun querySubscriptions(vararg skuIds: String?): Observable<InventorySubscription> =
+    query(SkuType.SUBS, skuIds.toList().filterNotNull(), ::PlayBillingInventorySubscription)
 
   @CheckReturnValue private fun <T : Any> query(skuType: String, skuList: List<String>, converter: (SkuDetails) -> T): Observable<T> {
     if (skuList.isEmpty()) {
@@ -98,8 +102,8 @@ import io.reactivex.subjects.PublishSubject
       .flatMap { client ->
         Single.create<PurchaseResponse> { emitter ->
           val skuDetails = when (purchaseAble) {
-            is PlayBillingInventoryInApp -> purchaseAble.skuDetails()
-            is PlayBillingInventorySubscription -> purchaseAble.skuDetails()
+            is PlayBillingInventoryInApp -> purchaseAble.skuDetails
+            is PlayBillingInventorySubscription -> purchaseAble.skuDetails
             else -> throw IllegalArgumentException("Please pass an PurchaseAble that you have retrieved from this library using #queryInAppPurchases or #querySubscriptions")
           }
 
@@ -113,12 +117,12 @@ import io.reactivex.subjects.PublishSubject
 
           emitter.setDisposable(
             purchaseSubject
-              .takeUntil { (_, purchases) -> purchases?.any { it.sku == purchaseAble.sku() } == true }
+              .takeUntil { (_, purchases) -> purchases?.any { it.sku == purchaseAble.sku } == true }
               .firstOrError()
               .subscribe({ (billingResponse, purchases) ->
                 when (billingResponse.responseCode) {
                   BillingResponseCode.OK -> {
-                    val match = requireNotNull(purchases).first { it.sku == purchaseAble.sku() }
+                    val match = requireNotNull(purchases).first { it.sku == purchaseAble.sku }
                     emitter.onSuccess(
                       PurchaseResponse(
                         packageName = match.packageName,
@@ -132,7 +136,7 @@ import io.reactivex.subjects.PublishSubject
                   }
                   else -> emitter.onError(
                     RxBillingPurchaseException(
-                      sku = purchaseAble.sku(),
+                      sku = purchaseAble.sku,
                       responseCode = billingResponse.responseCode,
                       debugMessage = billingResponse.debugMessage,
                     ),
