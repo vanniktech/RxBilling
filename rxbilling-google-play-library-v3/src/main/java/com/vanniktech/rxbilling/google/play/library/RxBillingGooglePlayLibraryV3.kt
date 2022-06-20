@@ -35,7 +35,7 @@ import io.reactivex.subjects.PublishSubject
 @Suppress("Detekt.TooManyFunctions") class RxBillingGooglePlayLibraryV3 @JvmOverloads constructor(
   private val activity: Activity,
   private val logger: Logger = LogcatLogger(),
-  private val scheduler: Scheduler = Schedulers.io()
+  private val scheduler: Scheduler = Schedulers.io(),
 ) : RxBilling {
   private var billingClient: BillingClient? = null
 
@@ -77,7 +77,7 @@ import io.reactivex.subjects.PublishSubject
                 skuList = skuList,
                 responseCode = billingResult.responseCode,
                 debugMessage = billingResult.debugMessage,
-              )
+              ),
             )
           }
         }
@@ -126,10 +126,10 @@ import io.reactivex.subjects.PublishSubject
                       sku = purchaseAble.sku(),
                       responseCode = billingResponse.responseCode,
                       debugMessage = billingResponse.debugMessage,
-                    )
+                    ),
                   )
                 }
-              }, emitter::onError)
+              }, emitter::onError,),
           )
         }
       }.subscribeOn(scheduler)
@@ -144,7 +144,7 @@ import io.reactivex.subjects.PublishSubject
           client.acknowledgePurchase(
             AcknowledgePurchaseParams.newBuilder()
               .setPurchaseToken(purchased.purchaseToken())
-              .build()
+              .build(),
           ) { billingResult ->
             emitter.onSuccess(billingResult.responseCode)
           }
@@ -162,7 +162,7 @@ import io.reactivex.subjects.PublishSubject
           client.consumeAsync(
             ConsumeParams.newBuilder()
               .setPurchaseToken(purchased.purchaseToken())
-              .build()
+              .build(),
           ) { billingResult, _ ->
             emitter.onSuccess(billingResult.responseCode)
           }
@@ -196,7 +196,7 @@ import io.reactivex.subjects.PublishSubject
               RxBillingQueryPurchaseHistoryException(
                 responseCode = billingResult.responseCode,
                 debugMessage = billingResult.debugMessage,
-              )
+              ),
             )
           }
         }
@@ -226,7 +226,8 @@ import io.reactivex.subjects.PublishSubject
         override fun onBillingServiceDisconnected() {
           billingClient = null // We'll build up a new connection upon next request.
         }
-      })
+      },
+      )
     } else {
       emitter.onSuccess(requireNotNull(billingClient))
     }
@@ -234,7 +235,7 @@ import io.reactivex.subjects.PublishSubject
 
   internal data class PurchasesUpdate(
     val billingResult: BillingResult,
-    val purchases: List<Purchase>?
+    val purchases: List<Purchase>?,
   )
 
   internal companion object {

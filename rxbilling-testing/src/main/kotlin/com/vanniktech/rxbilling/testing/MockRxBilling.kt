@@ -21,7 +21,7 @@ class MockRxBilling(
   private val getPurchasedInApp: Observable<PurchasedInApp> = Observable.never(),
   private val getPurchasedSubscriptions: Observable<PurchasedSubscription> = Observable.never(),
   private val acknowledgePurchase: Single<Int> = Single.never(),
-  private val consumePurchase: Single<Int> = Single.never()
+  private val consumePurchase: Single<Int> = Single.never(),
 ) : RxBilling {
   private var destroyed = false
 

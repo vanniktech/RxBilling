@@ -10,7 +10,7 @@ sealed class RxBillingException(
   "$messagePrefix with responseCode $responseCode" + when {
     debugMessage.isBlank() -> ""
     else -> " and message $debugMessage"
-  }
+  },
 )
 
 class RxBillingNoBillingSupportedException(
