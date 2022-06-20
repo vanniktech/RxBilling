@@ -20,7 +20,7 @@ internal class LogcatLogger : Logger {
     Log.e(TAG, log)
   }
 
-  companion object {
+  private companion object {
     const val TAG = "RxBilling"
   }
 }
