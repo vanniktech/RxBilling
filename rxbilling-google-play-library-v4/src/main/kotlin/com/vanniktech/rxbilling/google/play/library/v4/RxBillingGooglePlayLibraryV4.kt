@@ -275,6 +275,6 @@ class RxBillingGooglePlayLibraryV4 @JvmOverloads constructor(
   )
 
   internal companion object {
-    const val DEFAULT_PURCHASE_STATE = 0 // https://issuetracker.google.com/issues/123449154
+    internal const val DEFAULT_PURCHASE_STATE = 0 // https://issuetracker.google.com/issues/123449154
   }
 }
