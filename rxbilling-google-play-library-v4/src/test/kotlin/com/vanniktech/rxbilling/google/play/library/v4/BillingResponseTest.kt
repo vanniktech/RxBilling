@@ -7,6 +7,9 @@ import com.vanniktech.rxbilling.RxBilling.BillingResponse as RxBillingResponse
 
 class BillingResponseTest {
   @Test fun equality() {
+    assertEquals(BillingResponseCode.SERVICE_TIMEOUT, RxBillingResponse.SERVICE_TIMEOUT)
+    assertEquals(BillingResponseCode.FEATURE_NOT_SUPPORTED, RxBillingResponse.FEATURE_NOT_SUPPORTED)
+    assertEquals(BillingResponseCode.SERVICE_DISCONNECTED, RxBillingResponse.SERVICE_DISCONNECTED)
     assertEquals(BillingResponseCode.OK, RxBillingResponse.OK)
     assertEquals(BillingResponseCode.USER_CANCELED, RxBillingResponse.USER_CANCELED)
     assertEquals(BillingResponseCode.SERVICE_UNAVAILABLE, RxBillingResponse.SERVICE_UNAVAILABLE)

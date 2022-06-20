@@ -4,6 +4,9 @@ import com.vanniktech.rxbilling.RxBilling.BillingResponse
 
 object BillingResponseUtil {
   fun asDebugString(@BillingResponse billingResponse: Int): String = when (billingResponse) {
+    BillingResponse.SERVICE_TIMEOUT -> "service_timeout"
+    BillingResponse.FEATURE_NOT_SUPPORTED -> "feature_not_supported"
+    BillingResponse.SERVICE_DISCONNECTED -> "service_disconnected"
     BillingResponse.OK -> "ok"
     BillingResponse.USER_CANCELED -> "user_canceled"
     BillingResponse.SERVICE_UNAVAILABLE -> "service_unavailable"
