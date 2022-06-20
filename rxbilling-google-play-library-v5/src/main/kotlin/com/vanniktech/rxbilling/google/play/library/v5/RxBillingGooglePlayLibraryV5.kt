@@ -308,7 +308,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
   }
 }
 
-private fun BillingFlowParams.ProductDetailsParams.Builder.setOfferToken(token: String?) = when {
+internal fun BillingFlowParams.ProductDetailsParams.Builder.setOfferToken(token: String?) = when {
   token != null -> setOfferToken(token)
   else -> this
 }
