@@ -3,7 +3,7 @@ package com.vanniktech.rxbilling.testing
 import com.vanniktech.rxbilling.PurchaseResponse
 import com.vanniktech.rxbilling.PurchasedInApp
 import com.vanniktech.rxbilling.PurchasedSubscription
-import com.vanniktech.rxbilling.RxBilling.BillingResponse.OK
+import com.vanniktech.rxbilling.RxBilling.BillingResponse.Companion.OK
 import com.vanniktech.rxbilling.RxBillingNoBillingSupportedException
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -49,28 +49,28 @@ class MockRxBillingTest {
 
   @Test fun isBillingForInAppSupportedDefault() {
     MockRxBilling()
-      .isBillingForInAppSupported
+      .isBillingForInAppSupported()
       .test()
       .assertNoValues()
   }
 
   @Test fun isBillingForInAppSupported() {
     MockRxBilling(isBillingForInAppSupported = Completable.error(RxBillingNoBillingSupportedException("inapp", 6)))
-      .isBillingForInAppSupported
+      .isBillingForInAppSupported()
       .test()
       .assertFailure(RxBillingNoBillingSupportedException::class.java)
   }
 
   @Test fun isBillingForSubscriptionsSupportedDefault() {
     MockRxBilling()
-      .isBillingForSubscriptionsSupported
+      .isBillingForSubscriptionsSupported()
       .test()
       .assertNoValues()
   }
 
   @Test fun isBillingForSubscriptionsSupported() {
     MockRxBilling(isBillingForSubscriptionsSupported = Completable.error(RxBillingNoBillingSupportedException("subs", 6)))
-      .isBillingForSubscriptionsSupported
+      .isBillingForSubscriptionsSupported()
       .test()
       .assertFailure(RxBillingNoBillingSupportedException::class.java)
   }
@@ -91,28 +91,28 @@ class MockRxBillingTest {
 
   @Test fun getPurchasedInAppsDefault() {
     MockRxBilling()
-      .purchasedInApps
+      .getPurchasedInApps()
       .test()
       .assertNoValues()
   }
 
   @Test fun getPurchasedInApps() {
     MockRxBilling(getPurchasedInApp = Observable.just(purchasedInApp))
-      .purchasedInApps
+      .getPurchasedInApps()
       .test()
       .assertResult(purchasedInApp)
   }
 
   @Test fun getPurchasedSubscriptionsDefault() {
     MockRxBilling()
-      .purchasedSubscriptions
+      .getPurchasedSubscriptions()
       .test()
       .assertNoValues()
   }
 
   @Test fun getPurchasedSubscriptions() {
     MockRxBilling(getPurchasedSubscriptions = Observable.just(purchasedSubscription))
-      .purchasedSubscriptions
+      .getPurchasedSubscriptions()
       .test()
       .assertResult(purchasedSubscription)
   }
@@ -164,7 +164,7 @@ class MockRxBillingTest {
     mock.destroy()
 
     try {
-      mock.isBillingForInAppSupported
+      mock.isBillingForInAppSupported()
         .test()
         .assertResult()
       fail("Should have thrown")

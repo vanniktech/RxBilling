@@ -48,13 +48,13 @@ import io.reactivex.subjects.PublishSubject
     billingClient = null
   }
 
-  @CheckReturnValue override fun queryInAppPurchases(vararg skuIds: String?): Observable<InventoryInApp> = query(
-    SkuType.INAPP, skuIds.toList().filterNotNull(),
+  @CheckReturnValue override fun queryInAppPurchases(vararg skuIds: String): Observable<InventoryInApp> = query(
+    SkuType.INAPP, skuIds.toList(),
     ::PlayBillingInventoryInApp,
   )
 
-  @CheckReturnValue override fun querySubscriptions(vararg skuIds: String?): Observable<InventorySubscription> = query(
-    SkuType.SUBS, skuIds.toList().filterNotNull(),
+  @CheckReturnValue override fun querySubscriptions(vararg skuIds: String): Observable<InventorySubscription> = query(
+    SkuType.SUBS, skuIds.toList(),
     ::PlayBillingInventorySubscription,
   )
 
