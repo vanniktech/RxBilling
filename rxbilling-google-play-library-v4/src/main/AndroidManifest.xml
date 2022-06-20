@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.vanniktech.rxbilling.google.play.library.v4"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+  <application>
+    <activity
+        android:name="com.android.billingclient.api.ProxyBillingActivity"
+        android:theme="@style/BillingProxy"
+        tools:replace="android:theme"
+        />
+  </application>
+</manifest>
