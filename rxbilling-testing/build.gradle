@@ -8,4 +8,10 @@ dependencies {
   testImplementation deps.test.junit
 }
 
+kotlin {
+  jvmToolchain {
+    languageVersion.set(JavaLanguageVersion.of("8"))
+  }
+}
+
 apply plugin: "com.vanniktech.maven.publish"

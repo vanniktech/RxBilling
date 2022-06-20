@@ -8,9 +8,6 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 dependencies {
   api deps.rx.java
   api deps.support.annotations
-
-  compileOnly deps.autoValue.annotations
-  kapt deps.autoValue.compiler
 }
 
 dependencies {

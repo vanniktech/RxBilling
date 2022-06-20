@@ -1,17 +1,12 @@
 buildscript {
   ext.versions = [
     kotlin: '1.7.0',
-    autoValue: '1.9',
     testRules: '1.4.0',
   ]
 
   ext.deps = [
     'rx': [
       'java': 'io.reactivex.rxjava2:rxjava:2.2.21',
-    ],
-    'autoValue': [
-      'compiler': "com.google.auto.value:auto-value:${versions.autoValue}",
-      'annotations': "com.google.auto.value:auto-value-annotations:${versions.autoValue}",
     ],
     'support': [
       'annotations': 'androidx.annotation:annotation:1.4.0',
