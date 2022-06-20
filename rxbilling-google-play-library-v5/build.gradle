@@ -10,12 +10,6 @@ android {
     minSdkVersion 15
     testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
   }
-
-  buildTypes {
-    debug {
-      testCoverageEnabled true
-    }
-  }
 }
 
 dependencies {
