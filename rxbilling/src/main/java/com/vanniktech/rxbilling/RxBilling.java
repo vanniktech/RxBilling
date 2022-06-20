@@ -11,8 +11,7 @@ import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 /**
- * Billing interface for Google's In-app Billing.
- * https://developer.android.com/google/play/billing/billing_reference.html
+ * Billing interface for <a href="https://developer.android.com/google/play/billing/billing_reference.html">Google's In-app Billing</a>.
  */
 public interface RxBilling {
   /**
@@ -39,18 +38,18 @@ public interface RxBilling {
   /**
    * Checks whether billing for inapp is supported or not.
    * In case it is the Completable will just complete.
-   * Otherwise a {@link RxBillingNoBillingSupportedException} will be thrown.
+   * Otherwise, a {@link RxBillingNoBillingSupportedException} will be thrown.
    *
-   * @return Completable which will complete in case it is supported. Otherwise an error will be emitted.
+   * @return Completable which will complete in case it is supported. Otherwise, an error will be emitted.
    */
   @NonNull @CheckReturnValue Completable isBillingForInAppSupported();
 
   /**
    * Checks whether billing for subscriptions is supported or not.
    * In case it is the Completable will just complete.
-   * Otherwise a {@link RxBillingNoBillingSupportedException} will be thrown.
+   * Otherwise, a {@link RxBillingNoBillingSupportedException} will be thrown.
    *
-   * @return Completable which will complete in case it is supported. Otherwise an error will be emitted.
+   * @return Completable which will complete in case it is supported. Otherwise, an error will be emitted.
    */
   @NonNull @CheckReturnValue Completable isBillingForSubscriptionsSupported();
 
@@ -68,14 +67,14 @@ public interface RxBilling {
       @NonNull String developerPayload);
 
   /**
-   * @return all of the inapp purchases that have taken place already on by one and then completes.
+   * @return all the inapp purchases that have taken place already on by one and then completes.
    * In case there were none the Observable will just complete.
    * In case of an error a {@link RxBillingQueryPurchaseHistoryException} will be emitted.
    */
   @NonNull @CheckReturnValue Observable<PurchasedInApp> getPurchasedInApps();
 
   /**
-   * @return all of the subscription purchases that have taken place already on by one and then completes.
+   * @return all the subscription purchases that have taken place already on by one and then completes.
    * In case there were none the Observable will just complete.
    * In case of an error a {@link RxBillingQueryPurchaseHistoryException} will be emitted.
    */
@@ -83,9 +82,6 @@ public interface RxBilling {
 
   /**
    * Acknowledges the given inapp purchase which has been bought.
-   *
-   * Note: This method must only be called when using the rxbilling-google-play-library-v3 library.
-   * Other implementations will simply return BillingResponse.OK as they are not required to acknowledge purchases.
    *
    * @param purchased the purchased object to consume
    * @return Single containing the BillingResponse
@@ -101,7 +97,7 @@ public interface RxBilling {
   @NonNull @CheckReturnValue Single<Integer> consumePurchase(@NonNull Purchased purchased);
 
   /**
-   * Destroys the current session and releases all of the references.
+   * Destroys the current session and releases all the references.
    * Call this when you're done or your Activity is about to be destroyed.
    */
   void destroy();
