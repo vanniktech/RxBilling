@@ -119,7 +119,16 @@ import io.reactivex.subjects.PublishSubject
                 when (billingResponse.responseCode) {
                   BillingResponseCode.OK -> {
                     val match = requireNotNull(purchases).first { it.sku == purchaseAble.sku() }
-                    emitter.onSuccess(PurchaseResponse.create(match.packageName, match.sku, match.purchaseToken, DEFAULT_PURCHASE_STATE, match.purchaseTime, match.orderId))
+                    emitter.onSuccess(
+                      PurchaseResponse(
+                        packageName = match.packageName,
+                        productId = match.sku,
+                        purchaseToken = match.purchaseToken,
+                        purchaseState = DEFAULT_PURCHASE_STATE,
+                        purchaseTime = match.purchaseTime,
+                        orderId = match.orderId,
+                      ),
+                    )
                   }
                   else -> emitter.onError(
                     RxBillingPurchaseException(
@@ -143,7 +152,7 @@ import io.reactivex.subjects.PublishSubject
         Single.create<Int> { emitter ->
           client.acknowledgePurchase(
             AcknowledgePurchaseParams.newBuilder()
-              .setPurchaseToken(purchased.purchaseToken())
+              .setPurchaseToken(purchased.purchaseToken)
               .build(),
           ) { billingResult ->
             emitter.onSuccess(billingResult.responseCode)
@@ -161,7 +170,7 @@ import io.reactivex.subjects.PublishSubject
         Single.create<Int> { emitter ->
           client.consumeAsync(
             ConsumeParams.newBuilder()
-              .setPurchaseToken(purchased.purchaseToken())
+              .setPurchaseToken(purchased.purchaseToken)
               .build(),
           ) { billingResult, _ ->
             emitter.onSuccess(billingResult.responseCode)
@@ -172,11 +181,23 @@ import io.reactivex.subjects.PublishSubject
   }
 
   @CheckReturnValue override fun getPurchasedInApps() = getPurchased(SkuType.INAPP) {
-    PurchasedInApp.create(activity.packageName, it.sku, it.purchaseToken, DEFAULT_PURCHASE_STATE, it.purchaseTime)
+    PurchasedInApp(
+      packageName = activity.packageName,
+      productId = it.sku,
+      purchaseToken = it.purchaseToken,
+      purchaseState = DEFAULT_PURCHASE_STATE,
+      purchaseTime = it.purchaseTime,
+    )
   }
 
   @CheckReturnValue override fun getPurchasedSubscriptions() = getPurchased(SkuType.SUBS) {
-    PurchasedSubscription.create(activity.packageName, it.sku, it.purchaseToken, DEFAULT_PURCHASE_STATE, it.purchaseTime)
+    PurchasedSubscription(
+      packageName = activity.packageName,
+      productId = it.sku,
+      purchaseToken = it.purchaseToken,
+      purchaseState = DEFAULT_PURCHASE_STATE,
+      purchaseTime = it.purchaseTime,
+    )
   }
 
   @CheckReturnValue fun <T : Any> getPurchased(skuType: String, converter: (PurchaseHistoryRecord) -> T) = connect()

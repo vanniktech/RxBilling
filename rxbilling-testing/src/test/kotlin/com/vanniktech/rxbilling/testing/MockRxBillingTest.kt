@@ -15,9 +15,9 @@ import org.junit.Test
 class MockRxBillingTest {
   private val inventoryInApp = MockInventoryInApp("custom_themes", "inapp", "3.59", 3_590_000, "EUR", "title", "description")
   private val inventorySubscription = MockInventorySubscription("custom_themes", "inapp", "3.59", 3_590_000, "EUR", "title", "description")
-  private val purchaseResponse = PurchaseResponse.create("packageName", "custom_themes", "token", OK, 50)
-  private val purchasedInApp = PurchasedInApp.create("packageName", "custom_themes", "token", OK, 50)
-  private val purchasedSubscription = PurchasedSubscription.create("packageName", "custom_themes", "token", OK, 50)
+  private val purchaseResponse = PurchaseResponse("packageName", "custom_themes", "token", OK, 50)
+  private val purchasedInApp = PurchasedInApp("packageName", "custom_themes", "token", OK, 50)
+  private val purchasedSubscription = PurchasedSubscription("packageName", "custom_themes", "token", OK, 50)
 
   @Test fun queryInAppPurchasesDefault() {
     MockRxBilling()
