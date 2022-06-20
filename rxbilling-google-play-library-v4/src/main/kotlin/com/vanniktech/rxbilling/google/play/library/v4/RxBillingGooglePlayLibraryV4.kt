@@ -34,7 +34,7 @@ import io.reactivex.annotations.CheckReturnValue
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 
-@Suppress("Detekt.TooManyFunctions") class RxBillingGooglePlayLibraryV4 @JvmOverloads constructor(
+class RxBillingGooglePlayLibraryV4 @JvmOverloads constructor(
   private val activity: Activity,
   private val logger: Logger = LogcatLogger(),
   private val scheduler: Scheduler = Schedulers.io(),
