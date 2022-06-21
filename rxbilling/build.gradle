@@ -1,5 +1,6 @@
 plugins {
   id("app.cash.licensee")
+  id("com.dropbox.dependency-guard")
 }
 
 apply plugin: 'java-library'
@@ -9,6 +10,12 @@ apply plugin: 'kotlin-kapt'
 licensee {
   allow("Apache-2.0")
   allow("CC0-1.0")
+}
+
+dependencyGuard {
+  configuration("runtimeClasspath") {
+    tree = true
+  }
 }
 
 targetCompatibility = JavaVersion.VERSION_1_8
