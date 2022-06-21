@@ -1,5 +1,6 @@
 plugins {
   id("app.cash.licensee")
+  id("com.dropbox.dependency-guard")
 }
 
 apply plugin: 'com.android.library'
@@ -10,6 +11,12 @@ licensee {
   allow("Apache-2.0")
   allow("CC0-1.0")
   allowUrl("https://developer.android.com/studio/terms.html")
+}
+
+dependencyGuard {
+  configuration("releaseRuntimeClasspath") {
+    tree = true
+  }
 }
 
 android {
