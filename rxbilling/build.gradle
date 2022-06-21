@@ -1,6 +1,15 @@
+plugins {
+  id("app.cash.licensee")
+}
+
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
+
+licensee {
+  allow("Apache-2.0")
+  allow("CC0-1.0")
+}
 
 targetCompatibility = JavaVersion.VERSION_1_8
 sourceCompatibility = JavaVersion.VERSION_1_8
