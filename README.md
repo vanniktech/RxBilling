@@ -1,55 +1,58 @@
 # RxBilling
 
-Reactive wrapper around the Android Billing API that makes in app purchases and subscriptions really easy to handle. I've been using this library in my [apps](https://play.google.com/store/apps/developer?id=Niklas+Baudy) for years and it has been working nicely.
+Reactive wrapper around the [Android Billing API](https://developer.android.com/google/play/billing) that makes in app purchases and subscriptions really easy to handle. I've been using this library in my [apps](https://play.google.com/store/apps/developer?id=Niklas+Baudy) for years and it has been working nicely.
 
 # Usage
 
 The core functionality is provided via an interface:
 
-```java
-public interface RxBilling {
-  Observable<InventoryInApp> queryInAppPurchases(String... skuIds);
+```kotlin
+interface RxBilling {
+  fun queryInAppPurchases(vararg skuIds: String): Observable<InventoryInApp>
 
-  Observable<InventorySubscription> querySubscriptions(String... skuIds);
+  fun querySubscriptions(vararg skuIds: String): Observable<InventorySubscription>
 
-  Completable isBillingForInAppSupported();
+  fun isBillingForInAppSupported(): Completable
 
-  Completable isBillingForSubscriptionsSupported();
+  fun isBillingForSubscriptionsSupported(): Completable
 
-  Single<PurchaseResponse> purchase(Inventory inventory, String developerPayload);
+  fun purchase(inventory: Inventory, developerPayload: String): Single<PurchaseResponse>
 
-  Observable<PurchasedInApp> getPurchasedInApps();
+  fun getPurchasedInApps(): Observable<PurchasedInApp>
 
-  Observable<PurchasedSubscription> getPurchasedSubscriptions();
+  fun getPurchasedSubscriptions(): Observable<PurchasedSubscription>
 
-  Single<Integer> acknowledgePurchase(Purchased purchased);
+  fun acknowledgePurchase(purchased: Purchased): Single<Integer>
 
-  Single<Integer> consumePurchase(Purchased purchased);
+  fun consumePurchase(purchased: Purchased): Single<Integer>
 
-  void destroy();
+  fun destroy()
 
   @interface BillingResponse {
-    int OK = 0;
-    int USER_CANCELED = 1;
-    int SERVICE_UNAVAILABLE = 2;
-    int BILLING_UNAVAILABLE = 3;
-    int ITEM_UNAVAILABLE = 4;
-    int DEVELOPER_ERROR = 5;
-    int ERROR = 6;
-    int ITEM_ALREADY_OWNED = 7;
-    int ITEM_NOT_OWNED = 8;
+    const val SERVICE_TIMEOUT = -3
+    const val FEATURE_NOT_SUPPORTED = -2
+    const val SERVICE_DISCONNECTED = -1
+    const val OK = 0
+    const val USER_CANCELED = 1
+    const val SERVICE_UNAVAILABLE = 2
+    const val BILLING_UNAVAILABLE = 3
+    const val ITEM_UNAVAILABLE = 4
+    const val DEVELOPER_ERROR = 5
+    const val ERROR = 6
+    const val ITEM_ALREADY_OWNED = 7
+    const val ITEM_NOT_OWNED = 8
   }
 }
 ```
 
-The actual [interface](rxbilling/src/main/java/com/vanniktech/rxbilling/RxBilling.java) also contains documentation.
+The actual [interface](./rxbilling/src/main/kotlin/com/vanniktech/rxbilling/RxBilling.kt) also contains documentation.
 
-This library offers different implementations.
+This library offers different implementations based on different Google Play Billing library versions.
 
-### Google Play Billing Library v3 implementation
+### Google Play Billing Library v5 implementation
 
 ```groovy
-implementation 'com.vanniktech:rxbilling-google-play-library:0.6.0'
+implementation 'com.vanniktech:rxbilling-google-play-library-v5:0.7.0'
 ```
 
 ```java
@@ -58,7 +61,54 @@ class YourActivity extends Activity {
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate();
-    rxBilling = new RxBillingGooglePlayLibraryV3(this);
+    rxBilling = new com.vanniktech.rxbilling.google.play.library.v5.RxBillingGooglePlayLibraryV5(this);
+    // Use rxBilling to call your desired methods.
+  }
+
+  @Override public void onDestroy() {
+    super.onDestroy();
+    rxBilling.destroy();
+  }
+}
+```
+
+### Google Play Billing Library v4 implementation
+
+```groovy
+implementation 'com.vanniktech:rxbilling-google-play-library-v4:0.7.0'
+```
+
+```java
+class YourActivity extends Activity {
+  private RxBilling rxBilling;
+
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate();
+    rxBilling = new com.vanniktech.rxbilling.google.play.library.v4.RxBillingGooglePlayLibraryV4(this);
+    // Use rxBilling to call your desired methods.
+  }
+
+  @Override public void onDestroy() {
+    super.onDestroy();
+    rxBilling.destroy();
+  }
+}
+```
+
+### Google Play Billing Library v3 implementation
+
+```groovy
+implementation 'com.vanniktech:rxbilling-google-play-library:0.7.0'
+```
+
+```java
+class YourActivity extends Activity {
+  private RxBilling rxBilling;
+
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate();
+    rxBilling = new com.vanniktech.rxbilling.google.play.library.RxBillingGooglePlayLibraryV3(this);
+    // Use rxBilling to call your desired methods.
   }
 
   @Override public void onDestroy() {
@@ -70,10 +120,10 @@ class YourActivity extends Activity {
 
 ### Testing
 
-There's also a dedicated testing artifact.
+There's also a dedicated testing artifact, which provides a [MockRxBilling](./rxbilling-testing/src/main/kotlin/com/vanniktech/rxbilling/testing/MockRxBilling.kt) class.
 
 ```groovy
-implementation 'com.vanniktech:rxbilling-testing:0.6.0'
+implementation 'com.vanniktech:rxbilling-testing:0.7.0'
 ```
 
 # License

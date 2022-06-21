@@ -1,7 +1,27 @@
 # Change Log
 
-Version 0.7.0 *(In development)*
---------------------------------
+Version 0.7.0 *(2022-06-21)*
+----------------------------
+
+- Add Dependency Guard plugin. [\#72](https://github.com/vanniktech/RxBilling/pull/72) ([vanniktech](https://github.com/vanniktech))
+- Add licensee plugin for License verification. [\#71](https://github.com/vanniktech/RxBilling/pull/71) ([vanniktech](https://github.com/vanniktech))
+- Lint: Fail upon SyntheticAccessor issues. [\#69](https://github.com/vanniktech/RxBilling/pull/69) ([vanniktech](https://github.com/vanniktech))
+- Make Companion objects internal. [\#68](https://github.com/vanniktech/RxBilling/pull/68) ([vanniktech](https://github.com/vanniktech))
+- Kotlin: Use error\(\) instead of throw IllegalArgumentException\(\) [\#67](https://github.com/vanniktech/RxBilling/pull/67) ([vanniktech](https://github.com/vanniktech))
+- BillingResponse: Add SERVICE\_TIMEOUT, FEATURE\_NOT\_SUPPORTED & SERVICE\_DISCONNECTED cases. [\#65](https://github.com/vanniktech/RxBilling/pull/65) ([vanniktech](https://github.com/vanniktech))
+- Add rxbilling-google-play-library-v5 module. [\#64](https://github.com/vanniktech/RxBilling/pull/64) ([vanniktech](https://github.com/vanniktech))
+- Move source files into kotlin directory. [\#63](https://github.com/vanniktech/RxBilling/pull/63) ([vanniktech](https://github.com/vanniktech))
+- Convert RxBilling interface to Kotlin. [\#62](https://github.com/vanniktech/RxBilling/pull/62) ([vanniktech](https://github.com/vanniktech))
+- Convert Logger interface to Kotlin. [\#61](https://github.com/vanniktech/RxBilling/pull/61) ([vanniktech](https://github.com/vanniktech))
+- Convert Inventory interfaces to Kotlin and use data class instead of AutoValue. [\#60](https://github.com/vanniktech/RxBilling/pull/60) ([vanniktech](https://github.com/vanniktech))
+- Convert Purchased interfaces to Kotlin and use data class instead of AutoValue. [\#59](https://github.com/vanniktech/RxBilling/pull/59) ([vanniktech](https://github.com/vanniktech))
+- Brush up documentation of RxBilling. [\#58](https://github.com/vanniktech/RxBilling/pull/58) ([vanniktech](https://github.com/vanniktech))
+- Convert BillingResponseUtil class to Kotlin. [\#57](https://github.com/vanniktech/RxBilling/pull/57) ([vanniktech](https://github.com/vanniktech))
+- Convert Utils class to Kotlin. [\#56](https://github.com/vanniktech/RxBilling/pull/56) ([vanniktech](https://github.com/vanniktech))
+- Set Android's Namespace attribute. [\#55](https://github.com/vanniktech/RxBilling/pull/55) ([vanniktech](https://github.com/vanniktech))
+- Bump compileSdk to 31. [\#54](https://github.com/vanniktech/RxBilling/pull/54) ([vanniktech](https://github.com/vanniktech))
+- Add rxbilling-google-play-library-v4 module. [\#53](https://github.com/vanniktech/RxBilling/pull/53) ([vanniktech](https://github.com/vanniktech))
+- Update Kotlin to 1.7.0 & ktlint to 0.46.0 [\#52](https://github.com/vanniktech/RxBilling/pull/52) ([vanniktech](https://github.com/vanniktech))
 
 Version 0.6.0 *(2022-05-11)*
 ----------------------------
