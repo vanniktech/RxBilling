@@ -18,4 +18,7 @@ interface Purchased {
 
   /** The id of the order. */
   val orderId: String?
+
+  /** How many times this was purchased. Requires v4. On V3 this will always be 1. */
+  val quantity: Int
 }

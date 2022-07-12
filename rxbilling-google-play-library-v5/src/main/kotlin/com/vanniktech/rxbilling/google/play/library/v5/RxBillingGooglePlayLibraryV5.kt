@@ -162,6 +162,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
                         purchaseState = DEFAULT_PURCHASE_STATE,
                         purchaseTime = match.purchaseTime,
                         orderId = match.orderId,
+                        quantity = match.quantity,
                       ),
                     )
                   }
@@ -223,6 +224,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
         purchaseToken = purchaseHistoryRecord.purchaseToken,
         purchaseState = DEFAULT_PURCHASE_STATE,
         purchaseTime = purchaseHistoryRecord.purchaseTime,
+        quantity = purchaseHistoryRecord.quantity,
       )
     }
   }
@@ -235,6 +237,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
         purchaseToken = purchaseHistoryRecord.purchaseToken,
         purchaseState = DEFAULT_PURCHASE_STATE,
         purchaseTime = purchaseHistoryRecord.purchaseTime,
+        quantity = purchaseHistoryRecord.quantity,
       )
     }
   }

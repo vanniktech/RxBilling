@@ -7,4 +7,5 @@ data class PurchasedInApp(
   override val purchaseState: Int,
   override val purchaseTime: Long,
   override val orderId: String? = null,
+  override val quantity: Int,
 ) : Purchased
