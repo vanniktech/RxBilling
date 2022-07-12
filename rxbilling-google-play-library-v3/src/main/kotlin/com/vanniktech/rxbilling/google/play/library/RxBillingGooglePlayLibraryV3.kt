@@ -131,6 +131,7 @@ class RxBillingGooglePlayLibraryV3 @JvmOverloads constructor(
                         purchaseState = DEFAULT_PURCHASE_STATE,
                         purchaseTime = match.purchaseTime,
                         orderId = match.orderId,
+                        quantity = 1, // V3 only allows you to buy one item.
                       ),
                     )
                   }
@@ -191,6 +192,7 @@ class RxBillingGooglePlayLibraryV3 @JvmOverloads constructor(
       purchaseToken = it.purchaseToken,
       purchaseState = DEFAULT_PURCHASE_STATE,
       purchaseTime = it.purchaseTime,
+      quantity = 1, // V3 only allows you to buy one item.
     )
   }
 
@@ -201,6 +203,7 @@ class RxBillingGooglePlayLibraryV3 @JvmOverloads constructor(
       purchaseToken = it.purchaseToken,
       purchaseState = DEFAULT_PURCHASE_STATE,
       purchaseTime = it.purchaseTime,
+      quantity = 1, // V3 only allows you to buy one item.
     )
   }
 
