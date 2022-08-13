@@ -22,7 +22,7 @@ buildscript {
       ],
     ],
     'test': [
-      'mockito': 'org.mockito:mockito-core:4.6.1',
+      'mockito': 'org.mockito:mockito-core:4.7.0',
       'junit': 'junit:junit:4.13.2',
     ],
   ]
