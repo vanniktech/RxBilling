@@ -57,7 +57,7 @@ codeQualityTools {
     enabled = false
   }
   ktlint {
-    toolVersion = '0.46.0'
+    toolVersion = '0.47.1'
     experimental = true
   }
   detekt {
