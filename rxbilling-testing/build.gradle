@@ -11,9 +11,7 @@ licensee {
 }
 
 dependencyGuard {
-  configuration("runtimeClasspath") {
-    tree = true
-  }
+  configuration("runtimeClasspath")
 }
 
 dependencies {
