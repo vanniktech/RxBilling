@@ -13,7 +13,7 @@ buildscript {
 
       'test': [
         'espresso': [
-          'core': "androidx.test.espresso:espresso-core:3.4.0",
+          'core': "androidx.test.espresso:espresso-core:3.5.0",
         ],
 
         'runner': "androidx.test:runner:${versions.testRules}",
