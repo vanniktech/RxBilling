@@ -1,7 +1,7 @@
 buildscript {
   ext.versions = [
     kotlin: '1.7.0',
-    testRules: '1.4.0',
+    testRules: '1.5.1',
   ]
 
   ext.deps = [
