@@ -8,7 +8,7 @@ buildscript {
       'java': 'io.reactivex.rxjava2:rxjava:2.2.21',
     ],
     'support': [
-      'annotations': 'androidx.annotation:annotation:1.5.0',
+      'annotations': 'androidx.annotation:annotation:1.6.0',
 
       'test': [
         'espresso': [
