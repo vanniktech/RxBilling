@@ -4,7 +4,7 @@ import android.util.Log
 import com.vanniktech.rxbilling.Logger
 
 internal class LogcatLogger : Logger {
-  override fun d(tag: String, log: String) {
-    Log.d(tag, log)
+  override fun log(tag: String, message: String) {
+    Log.d(tag, message)
   }
 }

@@ -117,7 +117,7 @@ class RxBillingGooglePlayLibraryV6 @JvmOverloads constructor(
     Completable.complete().subscribeOn(scheduler) // https://issuetracker.google.com/issues/123447114
 
   @CheckReturnValue override fun purchase(purchaseAble: PurchaseAble, developerPayload: String): Single<PurchaseResponse> {
-    logger.d(TAG, "Trying to purchase $purchaseAble")
+    logger.log(TAG, "Trying to purchase $purchaseAble")
 
     return connect()
       .flatMap { client ->
@@ -147,7 +147,7 @@ class RxBillingGooglePlayLibraryV6 @JvmOverloads constructor(
 
           val responseCode = client.launchBillingFlow(activity, params)
 
-          logger.d(TAG, "ResponseCode $responseCode for purchase when launching billing flow with $purchaseAble")
+          logger.log(TAG, "ResponseCode $responseCode for purchase when launching billing flow with $purchaseAble")
 
           val sku = purchaseAble.sku
           emitter.setDisposable(
@@ -185,7 +185,7 @@ class RxBillingGooglePlayLibraryV6 @JvmOverloads constructor(
   }
 
   @CheckReturnValue override fun acknowledgePurchase(purchased: Purchased): Single<Int> {
-    logger.d(TAG, "Trying to acknowledge purchase $purchased")
+    logger.log(TAG, "Trying to acknowledge purchase $purchased")
 
     return connect()
       .flatMap { client ->
@@ -203,7 +203,7 @@ class RxBillingGooglePlayLibraryV6 @JvmOverloads constructor(
   }
 
   @CheckReturnValue override fun consumePurchase(purchased: Purchased): Single<Int> {
-    logger.d(TAG, "Trying to consume purchase $purchased")
+    logger.log(TAG, "Trying to consume purchase $purchased")
 
     return connect()
       .flatMap { client ->
@@ -288,10 +288,10 @@ class RxBillingGooglePlayLibraryV6 @JvmOverloads constructor(
         object : BillingClientStateListener {
           override fun onBillingSetupFinished(billingResult: BillingResult) {
             if (billingResult.responseCode == BillingResponseCode.OK) {
-              logger.d(TAG, "Connected to BillingClient")
+              logger.log(TAG, "Connected to BillingClient")
               emitter.onSuccess(client)
             } else {
-              logger.d(TAG, "Could not connect to BillingClient. ResponseCode: ${billingResult.responseCode} (${asDebugString(billingResult.responseCode)}) and message: ${billingResult.debugMessage}")
+              logger.log(TAG, "Could not connect to BillingClient. ResponseCode: ${billingResult.responseCode} (${asDebugString(billingResult.responseCode)}) and message: ${billingResult.debugMessage}")
               billingClient = null
             }
           }
