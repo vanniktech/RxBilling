@@ -8,16 +8,8 @@ internal class LogcatLogger : Logger {
     Log.d(TAG, log)
   }
 
-  override fun w(log: String) {
-    Log.w(TAG, log)
-  }
-
   override fun w(throwable: Throwable) {
     Log.w(TAG, throwable)
-  }
-
-  override fun e(log: String) {
-    Log.e(TAG, log)
   }
 
   private companion object {
