@@ -1,6 +1,6 @@
 buildscript {
   ext.versions = [
-    kotlin: '1.8.21',
+    kotlin: '1.8.22',
   ]
 
   ext.deps = [
