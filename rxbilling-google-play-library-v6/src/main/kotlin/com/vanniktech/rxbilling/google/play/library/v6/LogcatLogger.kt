@@ -7,8 +7,4 @@ internal class LogcatLogger : Logger {
   override fun d(tag: String, log: String) {
     Log.d(tag, log)
   }
-
-  override fun w(tag: String, throwable: Throwable) {
-    Log.w(tag, throwable)
-  }
 }
