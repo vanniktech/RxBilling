@@ -41,6 +41,7 @@ interface RxBilling {
     const val ERROR = 6
     const val ITEM_ALREADY_OWNED = 7
     const val ITEM_NOT_OWNED = 8
+    const val NETWORK_ERROR = 12
   }
 }
 ```
@@ -48,6 +49,29 @@ interface RxBilling {
 The actual [interface](./rxbilling/src/main/kotlin/com/vanniktech/rxbilling/RxBilling.kt) also contains documentation.
 
 This library offers different implementations based on different Google Play Billing library versions.
+
+### Google Play Billing Library v6 implementation
+
+```groovy
+implementation 'com.vanniktech:rxbilling-google-play-library-v6:0.7.0'
+```
+
+```java
+class YourActivity extends Activity {
+  private RxBilling rxBilling;
+
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate();
+    rxBilling = new com.vanniktech.rxbilling.google.play.library.v6.RxBillingGooglePlayLibraryV6(this);
+    // Use rxBilling to call your desired methods.
+  }
+
+  @Override public void onDestroy() {
+    super.onDestroy();
+    rxBilling.destroy();
+  }
+}
+```
 
 ### Google Play Billing Library v5 implementation
 
