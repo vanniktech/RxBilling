@@ -95,29 +95,6 @@ class YourActivity extends Activity {
 }
 ```
 
-### Google Play Billing Library v3 implementation
-
-```groovy
-implementation 'com.vanniktech:rxbilling-google-play-library:0.7.0'
-```
-
-```java
-class YourActivity extends Activity {
-  private RxBilling rxBilling;
-
-  @Override public void onCreate(Bundle savedInstanceState) {
-    super.onCreate();
-    rxBilling = new com.vanniktech.rxbilling.google.play.library.RxBillingGooglePlayLibraryV3(this);
-    // Use rxBilling to call your desired methods.
-  }
-
-  @Override public void onDestroy() {
-    super.onDestroy();
-    rxBilling.destroy();
-  }
-}
-```
-
 ### Testing
 
 There's also a dedicated testing artifact, which provides a [MockRxBilling](./rxbilling-testing/src/main/kotlin/com/vanniktech/rxbilling/testing/MockRxBilling.kt) class.
