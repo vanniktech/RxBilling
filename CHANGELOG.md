@@ -1,7 +1,18 @@
 # Change Log
 
-Version 0.8.0 *(In development)*
---------------------------------
+Version 0.8.0 *(2023-06-27)*
+----------------------------
+
+- Add rxbilling-google-play-library-v6 module. [\#138](https://github.com/vanniktech/RxBilling/pull/138) ([vanniktech](https://github.com/vanniktech))
+- Breaking: Logger gets a tag: String now from the library. [\#140](https://github.com/vanniktech/RxBilling/pull/140) ([vanniktech](https://github.com/vanniktech))
+- Breaking: Logger now only has one log method with a tag and a message. [\#142](https://github.com/vanniktech/RxBilling/pull/142) ([vanniktech](https://github.com/vanniktech))
+- Breaking: Logger remove method with throwable. [\#141](https://github.com/vanniktech/RxBilling/pull/141) ([vanniktech](https://github.com/vanniktech))
+- Breaking: Remove Logger\#w & Logger\#e methods which take single log message. [\#139](https://github.com/vanniktech/RxBilling/pull/139) ([vanniktech](https://github.com/vanniktech))
+- Modernize Build scripts and use Java 11. [\#135](https://github.com/vanniktech/RxBilling/pull/135) ([vanniktech](https://github.com/vanniktech))
+- Stop support of com.vanniktech:rxbilling-google-play-library as -v5 should be used. [\#133](https://github.com/vanniktech/RxBilling/pull/133) ([vanniktech](https://github.com/vanniktech))
+- Stop support of com.vanniktech:rxbilling-google-play-library-v4 as -v5 should be used. [\#134](https://github.com/vanniktech/RxBilling/pull/134) ([vanniktech](https://github.com/vanniktech))
+- Support Quantity from a purchase \(needs Billing Client v4 or later\) [\#74](https://github.com/vanniktech/RxBilling/pull/74) ([vanniktech](https://github.com/vanniktech))
+- Update dependency com.android.billingclient:billing to v5.2.1 [\#122](https://github.com/vanniktech/RxBilling/pull/122) ([renovate[bot]](https://github.com/apps/renovate))
 
 Version 0.7.0 *(2022-06-21)*
 ----------------------------
