@@ -1,6 +1,6 @@
 package com.vanniktech.rxbilling
 
 interface Logger {
-  fun d(log: String)
-  fun w(throwable: Throwable)
+  fun d(tag: String, log: String)
+  fun w(tag: String, throwable: Throwable)
 }

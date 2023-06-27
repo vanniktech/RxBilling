@@ -34,6 +34,8 @@ import io.reactivex.annotations.CheckReturnValue
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 
+private const val TAG = "GooglePlayBillingV5"
+
 class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
   private val activity: Activity,
   private val logger: Logger = LogcatLogger(),
@@ -115,7 +117,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
     Completable.complete().subscribeOn(scheduler) // https://issuetracker.google.com/issues/123447114
 
   @CheckReturnValue override fun purchase(purchaseAble: PurchaseAble, developerPayload: String): Single<PurchaseResponse> {
-    logger.d("Trying to purchase $purchaseAble")
+    logger.d(TAG, "Trying to purchase $purchaseAble")
 
     return connect()
       .flatMap { client ->
@@ -145,7 +147,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
 
           val responseCode = client.launchBillingFlow(activity, params)
 
-          logger.d("ResponseCode $responseCode for purchase when launching billing flow with $purchaseAble")
+          logger.d(TAG, "ResponseCode $responseCode for purchase when launching billing flow with $purchaseAble")
 
           val sku = purchaseAble.sku
           emitter.setDisposable(
@@ -183,7 +185,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
   }
 
   @CheckReturnValue override fun acknowledgePurchase(purchased: Purchased): Single<Int> {
-    logger.d("Trying to acknowledge purchase $purchased")
+    logger.d(TAG, "Trying to acknowledge purchase $purchased")
 
     return connect()
       .flatMap { client ->
@@ -201,7 +203,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
   }
 
   @CheckReturnValue override fun consumePurchase(purchased: Purchased): Single<Int> {
-    logger.d("Trying to consume purchase $purchased")
+    logger.d(TAG, "Trying to consume purchase $purchased")
 
     return connect()
       .flatMap { client ->
@@ -286,10 +288,10 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
         object : BillingClientStateListener {
           override fun onBillingSetupFinished(billingResult: BillingResult) {
             if (billingResult.responseCode == BillingResponseCode.OK) {
-              logger.d("Connected to BillingClient")
+              logger.d(TAG, "Connected to BillingClient")
               emitter.onSuccess(client)
             } else {
-              logger.d("Could not connect to BillingClient. ResponseCode: ${billingResult.responseCode} (${asDebugString(billingResult.responseCode)}) and message: ${billingResult.debugMessage}")
+              logger.d(TAG, "Could not connect to BillingClient. ResponseCode: ${billingResult.responseCode} (${asDebugString(billingResult.responseCode)}) and message: ${billingResult.debugMessage}")
               billingClient = null
             }
           }
