@@ -17,7 +17,7 @@ androidx-test-runner = { module = "androidx.test:runner", version = "1.5.2" }
 billing5 = { module = "com.android.billingclient:billing", version = "5.2.1" }
 plugin-android-cache-fix = { module = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin", version = "2.7.1" }
 plugin-androidgradleplugin = { module = "com.android.tools.build:gradle", version.ref = "androidgradleplugin" }
-plugin-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version = "1.8.10" }
+plugin-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version = "1.8.20" }
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-licensee = { module = "app.cash.licensee:licensee-gradle-plugin", version = "1.7.0" }
 plugin-publish = { module = "com.vanniktech:gradle-maven-publish-plugin", version = "0.25.2" }
