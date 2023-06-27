@@ -115,10 +115,14 @@ interface RxBilling {
     BillingResponse.ERROR,
     BillingResponse.ITEM_ALREADY_OWNED,
     BillingResponse.ITEM_NOT_OWNED,
+    BillingResponse.NETWORK_ERROR,
   )
   annotation class BillingResponse {
     companion object {
-      /** The request has reached the maximum timeout before Google Play responds. */
+      /**
+       * The request has reached the maximum timeout before Google Play responds.
+       * This will not be returned from Play Billing Library v6 and upwards.
+       */
       const val SERVICE_TIMEOUT = -3
 
       /** Requested feature is not supported by Play Store on the current device. */
@@ -157,6 +161,9 @@ interface RxBilling {
 
       /** Failure to consume since item is not owned. */
       const val ITEM_NOT_OWNED = 8
+
+      /** When an error occurs due to a network connection issue. Only from Play Billing Library v6 and upwards. */
+      const val NETWORK_ERROR = 12
     }
   }
 }
