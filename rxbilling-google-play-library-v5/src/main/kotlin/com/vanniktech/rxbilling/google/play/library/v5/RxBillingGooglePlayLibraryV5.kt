@@ -49,13 +49,15 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
   }
 
   @CheckReturnValue override fun queryInAppPurchases(vararg skuIds: String): Observable<InventoryInApp> = query(
-    BillingClient.ProductType.INAPP, skuIds.toList(),
+    BillingClient.ProductType.INAPP,
+    skuIds.toList(),
   ) { productDetails ->
     listOf(PlayBillingInventoryInApp(productDetails))
   }
 
   @CheckReturnValue override fun querySubscriptions(vararg skuIds: String): Observable<InventorySubscription> = query(
-    BillingClient.ProductType.SUBS, skuIds.toList(),
+    BillingClient.ProductType.SUBS,
+    skuIds.toList(),
   ) { productDetails ->
     productDetails.subscriptionOfferDetails.orEmpty().flatMap { subscriptionOfferDetails ->
       subscriptionOfferDetails.pricingPhases.pricingPhaseList.map { pricingPhase ->
@@ -174,7 +176,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
                     ),
                   )
                 }
-              }, emitter::onError,),
+              }, emitter::onError),
           )
         }
       }.subscribeOn(scheduler)
@@ -280,21 +282,22 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
 
       billingClient = client
 
-      client.startConnection(object : BillingClientStateListener {
-        override fun onBillingSetupFinished(billingResult: BillingResult) {
-          if (billingResult.responseCode == BillingResponseCode.OK) {
-            logger.d("Connected to BillingClient")
-            emitter.onSuccess(client)
-          } else {
-            logger.d("Could not connect to BillingClient. ResponseCode: ${billingResult.responseCode} (${asDebugString(billingResult.responseCode)}) and message: ${billingResult.debugMessage}")
-            billingClient = null
+      client.startConnection(
+        object : BillingClientStateListener {
+          override fun onBillingSetupFinished(billingResult: BillingResult) {
+            if (billingResult.responseCode == BillingResponseCode.OK) {
+              logger.d("Connected to BillingClient")
+              emitter.onSuccess(client)
+            } else {
+              logger.d("Could not connect to BillingClient. ResponseCode: ${billingResult.responseCode} (${asDebugString(billingResult.responseCode)}) and message: ${billingResult.debugMessage}")
+              billingClient = null
+            }
           }
-        }
 
-        override fun onBillingServiceDisconnected() {
-          billingClient = null // We'll build up a new connection upon next request.
-        }
-      },
+          override fun onBillingServiceDisconnected() {
+            billingClient = null // We'll build up a new connection upon next request.
+          }
+        },
       )
     } else {
       emitter.onSuccess(requireNotNull(billingClient))

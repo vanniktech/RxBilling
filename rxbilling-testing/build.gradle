@@ -1,8 +1,9 @@
 plugins {
   id("app.cash.licensee")
+  id("org.jetbrains.dokka")
+  id("com.vanniktech.maven.publish")
+  id("org.jetbrains.kotlin.jvm")
 }
-
-apply plugin: 'kotlin'
 
 licensee {
   allow("Apache-2.0")
@@ -14,13 +15,11 @@ dependencies {
 }
 
 dependencies {
-  testImplementation deps.test.junit
+  testImplementation(libs.kotlin.test.junit)
 }
 
 kotlin {
   jvmToolchain {
-    languageVersion.set(JavaLanguageVersion.of("8"))
+    languageVersion.set(JavaLanguageVersion.of(11))
   }
 }
-
-apply plugin: "com.vanniktech.maven.publish"

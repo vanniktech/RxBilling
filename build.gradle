@@ -1,31 +1,4 @@
 buildscript {
-  ext.versions = [
-    kotlin: '1.8.22',
-  ]
-
-  ext.deps = [
-    'rx': [
-      'java': 'io.reactivex.rxjava2:rxjava:2.2.21',
-    ],
-    'support': [
-      'annotations': 'androidx.annotation:annotation:1.6.0',
-
-      'test': [
-        'espresso': [
-          'core': "androidx.test.espresso:espresso-core:3.5.1",
-        ],
-
-        'runner': "androidx.test:runner:1.5.2",
-        'junitExt': "androidx.test.ext:junit:1.1.5",
-        'rules': "androidx.test:rules:1.5.0",
-      ],
-    ],
-    'test': [
-      'mockito': 'org.mockito:mockito-core:5.4.0',
-      'junit': 'junit:junit:4.13.2',
-    ],
-  ]
-
   repositories {
     mavenCentral()
     google()
@@ -33,16 +6,18 @@ buildscript {
   }
 
   dependencies {
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-    classpath 'com.android.tools.build:gradle:7.4.2'
-
-    classpath 'com.vanniktech:gradle-code-quality-tools-plugin:0.22.0'
-    classpath 'com.vanniktech:gradle-maven-publish-plugin:0.25.2'
-    classpath 'app.cash.licensee:licensee-gradle-plugin:1.7.0'
+    classpath(libs.plugin.android.cache.fix)
+    classpath(libs.plugin.androidgradleplugin)
+    classpath(libs.plugin.dokka)
+    classpath(libs.plugin.kotlin)
+    classpath(libs.plugin.licensee)
+    classpath(libs.plugin.publish)
   }
 }
 
-apply plugin: 'com.vanniktech.code.quality.tools'
+plugins {
+  alias(libs.plugins.codequalitytools)
+}
 
 codeQualityTools {
   lint {
@@ -55,7 +30,7 @@ codeQualityTools {
     enabled = false
   }
   ktlint {
-    toolVersion = '0.47.1'
+    toolVersion = "0.49.1"
     experimental = true
   }
   detekt {
@@ -71,9 +46,4 @@ subprojects {
     mavenCentral()
     google()
   }
-}
-
-wrapper {
-  gradleVersion = '7.6.1'
-  distributionType = Wrapper.DistributionType.ALL
 }

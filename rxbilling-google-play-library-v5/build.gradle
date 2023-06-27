@@ -1,10 +1,10 @@
 plugins {
   id("app.cash.licensee")
+  id("com.android.library")
+  id("org.jetbrains.kotlin.android")
+  id("org.jetbrains.dokka")
+  id("com.vanniktech.maven.publish")
 }
-
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 
 licensee {
   allow("Apache-2.0")
@@ -12,30 +12,39 @@ licensee {
   allowUrl("https://developer.android.com/studio/terms.html")
 }
 
+kotlin {
+  jvmToolchain {
+    languageVersion.set(JavaLanguageVersion.of(11))
+  }
+}
+
 android {
-  compileSdkVersion 31
+  compileSdk libs.versions.compileSdk.get() as int
   namespace "com.vanniktech.rxbilling.google.play.library.v5"
 
   defaultConfig {
-    minSdkVersion 15
+    minSdk libs.versions.minSdk.get() as int
     testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_11
   }
 }
 
 dependencies {
-  api project(":rxbilling")
-  //noinspection AndroidLintGradleDependency
-  api "com.android.billingclient:billing:5.2.1"
+  api(project(":rxbilling"))
+  api(libs.billing5)
 }
 
 dependencies {
-  testImplementation deps.test.junit
+  testImplementation(libs.kotlin.test.junit)
 }
 
 dependencies {
-  androidTestImplementation deps.support.test.espresso.core
-  androidTestImplementation deps.support.test.runner
-  androidTestImplementation deps.support.test.rules
+  androidTestImplementation(libs.androidx.espresso.core)
+  androidTestImplementation(libs.androidx.test.runner)
+  androidTestImplementation(libs.androidx.test.rules)
+  androidTestImplementation(libs.androidx.test.junit)
 }
-
-apply plugin: "com.vanniktech.maven.publish"
