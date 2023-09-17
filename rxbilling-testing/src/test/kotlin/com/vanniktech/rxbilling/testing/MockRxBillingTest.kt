@@ -55,7 +55,7 @@ class MockRxBillingTest {
   }
 
   @Test fun isBillingForInAppSupported() {
-    MockRxBilling(isBillingForInAppSupported = Completable.error(RxBillingNoBillingSupportedException("inapp", 6)))
+    MockRxBilling(isBillingForInAppSupported = Completable.error(RxBillingNoBillingSupportedException("inapp", 6, "client does not support this.")))
       .isBillingForInAppSupported()
       .test()
       .assertFailure(RxBillingNoBillingSupportedException::class.java)
@@ -69,7 +69,7 @@ class MockRxBillingTest {
   }
 
   @Test fun isBillingForSubscriptionsSupported() {
-    MockRxBilling(isBillingForSubscriptionsSupported = Completable.error(RxBillingNoBillingSupportedException("subs", 6)))
+    MockRxBilling(isBillingForSubscriptionsSupported = Completable.error(RxBillingNoBillingSupportedException("subs", 6, "client does not support this.")))
       .isBillingForSubscriptionsSupported()
       .test()
       .assertFailure(RxBillingNoBillingSupportedException::class.java)
