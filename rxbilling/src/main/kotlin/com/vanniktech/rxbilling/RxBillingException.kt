@@ -16,9 +16,10 @@ sealed class RxBillingException(
 class RxBillingNoBillingSupportedException(
   skuType: String,
   @RxBilling.BillingResponse responseCode: Int,
+  debugMessage: String,
 ) : RxBillingException(
   responseCode = responseCode,
-  debugMessage = "",
+  debugMessage = debugMessage,
   messagePrefix = "Billing for $skuType is not supported",
 )
 

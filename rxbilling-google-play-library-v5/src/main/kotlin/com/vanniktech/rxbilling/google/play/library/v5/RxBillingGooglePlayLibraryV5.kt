@@ -3,7 +3,6 @@ package com.vanniktech.rxbilling.google.play.library.v5
 import android.app.Activity
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.BillingClient.BillingResponseCode
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
@@ -23,6 +22,8 @@ import com.vanniktech.rxbilling.Purchased
 import com.vanniktech.rxbilling.PurchasedInApp
 import com.vanniktech.rxbilling.PurchasedSubscription
 import com.vanniktech.rxbilling.RxBilling
+import com.vanniktech.rxbilling.RxBilling.BillingResponse
+import com.vanniktech.rxbilling.RxBillingNoBillingSupportedException
 import com.vanniktech.rxbilling.RxBillingPurchaseException
 import com.vanniktech.rxbilling.RxBillingQueryException
 import com.vanniktech.rxbilling.RxBillingQueryPurchaseHistoryException
@@ -89,7 +90,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
       Observable.create<T> { emitter ->
         val queryProductDetailsParams = QueryProductDetailsParams.newBuilder().setProductList(products).build()
         client.queryProductDetailsAsync(queryProductDetailsParams) { billingResult, productDetailsList: List<ProductDetails> ->
-          if (billingResult.responseCode == BillingResponseCode.OK) {
+          if (billingResult.responseCode == BillingResponse.OK) {
             for (productDetails in productDetailsList) {
               converter.invoke(productDetails).forEach { emitter.onNext(it) }
             }
@@ -110,11 +111,35 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
     }.subscribeOn(scheduler)
   }
 
-  @CheckReturnValue override fun isBillingForInAppSupported() =
-    Completable.complete().subscribeOn(scheduler) // https://issuetracker.google.com/issues/123447114
+  @CheckReturnValue override fun isBillingForInAppSupported() = isBillingForSupported(
+    featureType = BillingClient.FeatureType.PRODUCT_DETAILS,
+    skuType = BillingClient.ProductType.INAPP,
+  )
 
-  @CheckReturnValue override fun isBillingForSubscriptionsSupported() =
-    Completable.complete().subscribeOn(scheduler) // https://issuetracker.google.com/issues/123447114
+  @CheckReturnValue override fun isBillingForSubscriptionsSupported() = isBillingForSupported(
+    featureType = BillingClient.FeatureType.SUBSCRIPTIONS,
+    skuType = BillingClient.ProductType.SUBS,
+  )
+
+  @CheckReturnValue private fun isBillingForSupported(
+    @BillingClient.FeatureType featureType: String,
+    @BillingClient.ProductType skuType: String,
+  ) = connect().flatMapCompletable { client ->
+    val featureSupported = client.isFeatureSupported(featureType)
+
+    if (featureSupported.responseCode == BillingResponse.OK) {
+      logger.log(TAG, "Billing $featureType is supported")
+      Completable.complete()
+    } else {
+      Completable.error(
+        RxBillingNoBillingSupportedException(
+          skuType = skuType,
+          responseCode = featureSupported.responseCode,
+          debugMessage = featureSupported.debugMessage,
+        ),
+      )
+    }
+  }
 
   @CheckReturnValue override fun purchase(purchaseAble: PurchaseAble, developerPayload: String): Single<PurchaseResponse> {
     logger.log(TAG, "Trying to purchase $purchaseAble")
@@ -156,7 +181,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
               .firstOrError()
               .subscribe({ (billingResponse, purchases) ->
                 when (billingResponse.responseCode) {
-                  BillingResponseCode.OK -> {
+                  BillingResponse.OK -> {
                     val match = requireNotNull(purchases).first { it.products.contains(sku) }
                     emitter.onSuccess(
                       PurchaseResponse(
@@ -220,7 +245,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
       .subscribeOn(scheduler)
   }
 
-  @CheckReturnValue override fun getPurchasedInApps() = getPurchased(BillingClient.ProductType.INAPP) { purchaseHistoryRecord ->
+  @CheckReturnValue override fun getPurchasedInApps(): Observable<PurchasedInApp> = getPurchased(BillingClient.ProductType.INAPP) { purchaseHistoryRecord ->
     purchaseHistoryRecord.products.map {
       PurchasedInApp(
         packageName = activity.packageName,
@@ -233,7 +258,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
     }
   }
 
-  @CheckReturnValue override fun getPurchasedSubscriptions() = getPurchased(BillingClient.ProductType.SUBS) { purchaseHistoryRecord ->
+  @CheckReturnValue override fun getPurchasedSubscriptions(): Observable<PurchasedSubscription> = getPurchased(BillingClient.ProductType.SUBS) { purchaseHistoryRecord ->
     purchaseHistoryRecord.products.map {
       PurchasedSubscription(
         packageName = activity.packageName,
@@ -246,15 +271,15 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
     }
   }
 
-  @CheckReturnValue fun <T : Any> getPurchased(skuType: String, converter: (PurchaseHistoryRecord) -> List<T>) = connect()
+  @CheckReturnValue fun <T : Any> getPurchased(skuType: String, converter: (PurchaseHistoryRecord) -> List<T>): Observable<T> = connect()
     .flatMapObservable { client ->
       Observable.create<T> { emitter ->
         val params = QueryPurchaseHistoryParams.newBuilder()
           .setProductType(skuType)
           .build()
         client.queryPurchaseHistoryAsync(params) { billingResult: BillingResult, purchasesList: List<PurchaseHistoryRecord>? ->
-          if (billingResult.responseCode == BillingResponseCode.OK) {
-            if (purchasesList != null && purchasesList.isNotEmpty()) {
+          if (billingResult.responseCode == BillingResponse.OK) {
+            if (!purchasesList.isNullOrEmpty()) {
               for (purchase in purchasesList) {
                 converter.invoke(purchase).forEach {
                   emitter.onNext(it)
@@ -287,7 +312,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
       client.startConnection(
         object : BillingClientStateListener {
           override fun onBillingSetupFinished(billingResult: BillingResult) {
-            if (billingResult.responseCode == BillingResponseCode.OK) {
+            if (billingResult.responseCode == BillingResponse.OK) {
               logger.log(TAG, "Connected to BillingClient")
               emitter.onSuccess(client)
             } else {
@@ -297,7 +322,7 @@ class RxBillingGooglePlayLibraryV5 @JvmOverloads constructor(
           }
 
           override fun onBillingServiceDisconnected() {
-            billingClient = null // We'll build up a new connection upon next request.
+            billingClient = null // We'll build up a new connection upon the next request.
           }
         },
       )
