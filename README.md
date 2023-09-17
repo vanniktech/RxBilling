@@ -53,7 +53,7 @@ This library offers different implementations based on different Google Play Bil
 ### Google Play Billing Library v6 implementation
 
 ```groovy
-implementation 'com.vanniktech:rxbilling-google-play-library-v6:0.8.0'
+implementation 'com.vanniktech:rxbilling-google-play-library-v6:0.9.0'
 ```
 
 ```java
@@ -76,7 +76,7 @@ class YourActivity extends Activity {
 ### Google Play Billing Library v5 implementation
 
 ```groovy
-implementation 'com.vanniktech:rxbilling-google-play-library-v5:0.8.0'
+implementation 'com.vanniktech:rxbilling-google-play-library-v5:0.9.0'
 ```
 
 ```java
@@ -101,7 +101,7 @@ class YourActivity extends Activity {
 There's also a dedicated testing artifact, which provides a [MockRxBilling](./rxbilling-testing/src/main/kotlin/com/vanniktech/rxbilling/testing/MockRxBilling.kt) class.
 
 ```groovy
-implementation 'com.vanniktech:rxbilling-testing:0.8.0'
+implementation 'com.vanniktech:rxbilling-testing:0.9.0'
 ```
 
 # License

@@ -1,7 +1,12 @@
 # Change Log
 
-Version 0.9.0 *(In development)*
---------------------------------
+Version 0.9.0 *(2023-09-17)*
+----------------------------
+
+- Behavior change: Correctly implement isBillingForInAppSupported & isBillingForSubscriptionsSupported. [\#161](https://github.com/vanniktech/RxBilling/pull/161) ([vanniktech](https://github.com/vanniktech))
+- Target 33 [\#147](https://github.com/vanniktech/RxBilling/pull/147) ([vanniktech](https://github.com/vanniktech))
+- Technical: Kotlin 1.9.10 & AGP 8.1.1 [\#155](https://github.com/vanniktech/RxBilling/pull/155) ([vanniktech](https://github.com/vanniktech))
+- Update dependency androidx.annotation:annotation to v1.7.0 [\#159](https://github.com/vanniktech/RxBilling/pull/159) ([renovate[bot]](https://github.com/apps/renovate))
 
 Version 0.8.0 *(2023-06-27)*
 ----------------------------
