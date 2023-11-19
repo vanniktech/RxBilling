@@ -14,7 +14,7 @@ androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", vers
 androidx-test-junit = { module = "androidx.test.ext:junit", version = "1.1.5" }
 androidx-test-rules = { module = "androidx.test:rules", version = "1.5.0" }
 androidx-test-runner = { module = "androidx.test:runner", version = "1.5.2" }
-billing5 = { module = "com.android.billingclient:billing", version = "5.2.1" }
+billing5 = { module = "com.android.billingclient:billing", version = "6.1.0" }
 billing6 = { module = "com.android.billingclient:billing", version = "6.1.0" }
 plugin-android-cache-fix = { module = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin", version = "3.0" }
 plugin-androidgradleplugin = { module = "com.android.tools.build:gradle", version.ref = "androidgradleplugin" }
