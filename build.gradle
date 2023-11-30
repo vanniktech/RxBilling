@@ -30,8 +30,7 @@ codeQualityTools {
     enabled = false
   }
   ktlint {
-    toolVersion = "0.49.1"
-    experimental = true
+    toolVersion = "1.0.1"
   }
   detekt {
     enabled = false
