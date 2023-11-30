@@ -4,7 +4,7 @@ compileSdk = "33"
 targetSdk = "33"
 
 androidgradleplugin = "8.1.1"
-kotlin = "1.9.20"
+kotlin = "1.9.21"
 
 [libraries]
 rxjava = { module = "io.reactivex.rxjava2:rxjava", version = "2.2.21" }
