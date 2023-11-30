@@ -24,4 +24,4 @@ plugin-licensee = { module = "app.cash.licensee:licensee-gradle-plugin", version
 plugin-publish = { module = "com.vanniktech:gradle-maven-publish-plugin", version = "0.25.3" }
 
 [plugins]
-codequalitytools = { id = "com.vanniktech.code.quality.tools", version = "0.23.0" }
+codequalitytools = { id = "com.vanniktech.code.quality.tools", version = "0.24.0" }
