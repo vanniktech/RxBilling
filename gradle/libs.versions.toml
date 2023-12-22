@@ -8,7 +8,7 @@ kotlin = "1.9.22"
 
 [libraries]
 rxjava = { module = "io.reactivex.rxjava2:rxjava", version = "2.2.21" }
-androidx-annotation = { module = "androidx.annotation:annotation", version = "1.7.0" }
+androidx-annotation = { module = "androidx.annotation:annotation", version = "1.7.1" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version = "3.5.1" }
 androidx-test-junit = { module = "androidx.test.ext:junit", version = "1.1.5" }
