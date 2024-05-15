@@ -67,14 +67,16 @@ interface RxBilling {
   /**
    * @return all the inapp purchases that have taken place already on by one and then completes.
    * In case there were none the Observable will just complete.
-   * In case of an error a [RxBillingQueryPurchaseHistoryException] will be emitted.
+   * In case of an error a [RxBillingQueryPurchaseHistoryException] will be emitted when using V5 or V6.
+   * In V7 [RxBillingQueryPurchasesException] is emitted.
    */
   @CheckReturnValue fun getPurchasedInApps(): Observable<PurchasedInApp>
 
   /**
    * @return all the subscription purchases that have taken place already on by one and then completes.
    * In case there were none the Observable will just complete.
-   * In case of an error a [RxBillingQueryPurchaseHistoryException] will be emitted.
+   * In case of an error a [RxBillingQueryPurchaseHistoryException] will be emitted when using V5 or V6.
+   * In V7 [RxBillingQueryPurchasesException] is emitted.
    */
   @CheckReturnValue fun getPurchasedSubscriptions(): Observable<PurchasedSubscription>
 

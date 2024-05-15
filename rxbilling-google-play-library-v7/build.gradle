@@ -1,0 +1,50 @@
+plugins {
+  id("app.cash.licensee")
+  id("com.android.library")
+  id("org.jetbrains.kotlin.android")
+  id("org.jetbrains.dokka")
+  id("com.vanniktech.maven.publish")
+}
+
+licensee {
+  allow("Apache-2.0")
+  allow("CC0-1.0")
+  allowUrl("https://developer.android.com/studio/terms.html")
+}
+
+kotlin {
+  jvmToolchain {
+    languageVersion.set(JavaLanguageVersion.of(11))
+  }
+}
+
+android {
+  compileSdk libs.versions.compileSdk.get() as int
+  namespace "com.vanniktech.rxbilling.google.play.library.v7"
+
+  defaultConfig {
+    minSdk libs.versions.minSdk.get() as int
+    testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_11
+  }
+}
+
+dependencies {
+  api(project(":rxbilling"))
+  api(libs.billing7)
+}
+
+dependencies {
+  testImplementation(libs.kotlin.test.junit)
+}
+
+dependencies {
+  androidTestImplementation(libs.androidx.espresso.core)
+  androidTestImplementation(libs.androidx.test.runner)
+  androidTestImplementation(libs.androidx.test.rules)
+  androidTestImplementation(libs.androidx.test.junit)
+}
