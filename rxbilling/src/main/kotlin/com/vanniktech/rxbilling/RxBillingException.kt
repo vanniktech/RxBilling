@@ -47,6 +47,7 @@ class RxBillingPurchaseException(
   messagePrefix = "Purchasing $sku failed",
 )
 
+/** V5 + V6. */
 class RxBillingQueryPurchaseHistoryException(
   @RxBilling.BillingResponse responseCode: Int,
   debugMessage: String,
@@ -54,4 +55,14 @@ class RxBillingQueryPurchaseHistoryException(
   responseCode = responseCode,
   debugMessage = debugMessage,
   messagePrefix = "Error during purchase history querying",
+)
+
+/** V7. */
+class RxBillingQueryPurchasesException(
+  @RxBilling.BillingResponse responseCode: Int,
+  debugMessage: String,
+) : RxBillingException(
+  responseCode = responseCode,
+  debugMessage = debugMessage,
+  messagePrefix = "Error during purchases querying",
 )
