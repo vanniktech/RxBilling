@@ -1,13 +1,14 @@
 # Change Log
 
+Version 0.11.0 *(In development)*
+---------------------------------
+
 Version 0.10.0 *(2024-08-02)*
 -----------------------------
 
 - API: Bump minSdk to 21. [\#204](https://github.com/vanniktech/RxBilling/pull/204) ([vanniktech](https://github.com/vanniktech))
 - Add rxbilling-google-play-library-v7 module. [\#209](https://github.com/vanniktech/RxBilling/pull/209) ([vanniktech](https://github.com/vanniktech))
-- Technical: Configure Lint regarding new dependency versions. [\#169](https://github.com/vanniktech/RxBilling/pull/169) ([vanniktech](https://github.com/vanniktech))
 - Technical: Update Billing Client from 6.1.0 to 6.2.1 [\#205](https://github.com/vanniktech/RxBilling/pull/205) ([vanniktech](https://github.com/vanniktech))
-- Technical: Update ktlint to 1.2.1 [\#210](https://github.com/vanniktech/RxBilling/pull/210) ([vanniktech](https://github.com/vanniktech))
 
 Version 0.9.0 *(2023-09-17)*
 ----------------------------
