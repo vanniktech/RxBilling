@@ -3,7 +3,7 @@ minSdk = "21"
 compileSdk = "33"
 targetSdk = "33"
 
-androidgradleplugin = "8.7.3"
+androidgradleplugin = "8.8.0"
 kotlin = "2.1.0"
 
 [libraries]
