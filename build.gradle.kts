@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 buildscript {
   repositories {
     mavenCentral()
@@ -44,5 +46,13 @@ subprojects {
   repositories {
     mavenCentral()
     google()
+  }
+
+  tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions {
+      freeCompilerArgs.addAll(
+        "-Xannotation-default-target=param-property",
+      )
+    }
   }
 }
