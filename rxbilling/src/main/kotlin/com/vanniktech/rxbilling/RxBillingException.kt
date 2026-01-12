@@ -7,10 +7,11 @@ sealed class RxBillingException(
   val debugMessage: String,
   messagePrefix: String,
 ) : RuntimeException(
-  "$messagePrefix with responseCode $responseCode" + when {
-    debugMessage.isBlank() -> ""
-    else -> " and message $debugMessage"
-  },
+  "$messagePrefix with responseCode $responseCode" +
+    when {
+      debugMessage.isBlank() -> ""
+      else -> " and message $debugMessage"
+    },
 )
 
 class RxBillingNoBillingSupportedException(
@@ -31,10 +32,12 @@ class RxBillingQueryException(
 ) : RxBillingException(
   responseCode = responseCode,
   debugMessage = debugMessage,
-  messagePrefix = "Querying $skuType" + when {
-    skuList.isNullOrEmpty() -> ""
-    else -> " with ${skuList.joinToString()}"
-  } + " failed",
+  messagePrefix = "Querying $skuType" +
+    when {
+      skuList.isNullOrEmpty() -> ""
+      else -> " with ${skuList.joinToString()}"
+    } +
+    " failed",
 )
 
 class RxBillingPurchaseException(
