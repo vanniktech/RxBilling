@@ -11,9 +11,7 @@ licensee {
 }
 
 kotlin {
-  jvmToolchain {
-    languageVersion.set(JavaLanguageVersion.of(11))
-  }
+  jvmToolchain(21)
 }
 
 dependencies {

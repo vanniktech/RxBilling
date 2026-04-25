@@ -10,6 +10,10 @@ licensee {
   allow("CC0-1.0")
 }
 
+kotlin {
+  jvmToolchain(21)
+}
+
 dependencies {
   api project(":rxbilling")
 }
