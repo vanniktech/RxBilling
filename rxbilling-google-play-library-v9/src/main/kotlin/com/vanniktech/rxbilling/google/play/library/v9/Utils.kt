@@ -1,6 +1,6 @@
 @file:JvmName("Utils")
 
-package com.vanniktech.rxbilling.google.play.library.v7
+package com.vanniktech.rxbilling.google.play.library.v9
 
 import java.math.BigDecimal
 import java.math.RoundingMode

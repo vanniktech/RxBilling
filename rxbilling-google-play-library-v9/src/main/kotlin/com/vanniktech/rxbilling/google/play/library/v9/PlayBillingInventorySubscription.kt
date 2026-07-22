@@ -1,21 +1,24 @@
 @file:JvmName("Utils")
 
-package com.vanniktech.rxbilling.google.play.library.v7
+package com.vanniktech.rxbilling.google.play.library.v9
 
 import com.android.billingclient.api.ProductDetails
-import com.vanniktech.rxbilling.InventoryInApp
+import com.android.billingclient.api.ProductDetails.PricingPhase
+import com.vanniktech.rxbilling.InventorySubscription
 import java.math.BigDecimal
 import java.util.Currency
 
-data class PlayBillingInventoryInApp(
+data class PlayBillingInventorySubscription(
   val productDetails: ProductDetails,
-) : InventoryInApp {
-  private val oneTimePurchaseOfferDetails = productDetails.oneTimePurchaseOfferDetails!!
+  val pricingPhase: PricingPhase,
+  val offerToken: String,
+  val offerTags: List<String>,
+) : InventorySubscription {
   override val sku: String = productDetails.productId
+  override val price: String = pricingPhase.formattedPrice
+  override val priceAmountMicros: Long = pricingPhase.priceAmountMicros
+  override val priceCurrencyCode: String = pricingPhase.priceCurrencyCode
   override val type: String = productDetails.productType
-  override val price: String = oneTimePurchaseOfferDetails.formattedPrice
-  override val priceAmountMicros: Long = oneTimePurchaseOfferDetails.priceAmountMicros
-  override val priceCurrencyCode: String = oneTimePurchaseOfferDetails.priceCurrencyCode
   override val title: String = productDetails.title
   override val description: String = productDetails.description
 

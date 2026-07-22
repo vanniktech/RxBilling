@@ -1,4 +1,4 @@
-package com.vanniktech.rxbilling.google.play.library.v7
+package com.vanniktech.rxbilling.google.play.library.v9
 
 import android.app.Activity
 import com.android.billingclient.api.AcknowledgePurchaseParams
@@ -35,9 +35,9 @@ import io.reactivex.annotations.CheckReturnValue
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 
-private const val TAG = "GooglePlayBillingV7"
+private const val TAG = "GooglePlayBillingV9"
 
-class RxBillingGooglePlayLibraryV7 @JvmOverloads constructor(
+class RxBillingGooglePlayLibraryV9 @JvmOverloads constructor(
   private val activity: Activity,
   private val logger: Logger = LogcatLogger(),
   private val scheduler: Scheduler = Schedulers.io(),
@@ -89,9 +89,9 @@ class RxBillingGooglePlayLibraryV7 @JvmOverloads constructor(
     return connect().flatMapObservable { client ->
       Observable.create<T> { emitter ->
         val queryProductDetailsParams = QueryProductDetailsParams.newBuilder().setProductList(products).build()
-        client.queryProductDetailsAsync(queryProductDetailsParams) { billingResult, productDetailsList: List<ProductDetails> ->
+        client.queryProductDetailsAsync(queryProductDetailsParams) { billingResult, productDetailsList ->
           if (billingResult.responseCode == BillingResponse.OK) {
-            for (productDetails in productDetailsList) {
+            for (productDetails in productDetailsList.productDetailsList) {
               converter.invoke(productDetails).forEach { emitter.onNext(it) }
             }
 
