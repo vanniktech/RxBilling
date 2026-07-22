@@ -1,7 +1,13 @@
 # Change Log
 
-Version 0.11.0 *(In development)*
----------------------------------
+Version 0.11.0 *(2026-07-21)*
+-----------------------------
+
+- Breaking: rxbilling-google-play-library-v7 becomes rxbilling-google-play-library-v9 [\#337](https://github.com/vanniktech/RxBilling/pull/337) ([vanniktech](https://github.com/vanniktech))
+- Breaking: Java 21, Target 37 and use Android Gradle Plugin 9.3.0 [\#336](https://github.com/vanniktech/RxBilling/pull/336) ([vanniktech](https://github.com/vanniktech))
+- Breaking: Stop support of com.vanniktech:rxbilling-google-play-library-v6 [\#335](https://github.com/vanniktech/RxBilling/pull/335) ([vanniktech](https://github.com/vanniktech))
+- Breaking: Stop support of com.vanniktech:rxbilling-google-play-library-v5 [\#334](https://github.com/vanniktech/RxBilling/pull/334) ([vanniktech](https://github.com/vanniktech))
+- Technical: Use Central Portal for publishing. [\#280](https://github.com/vanniktech/RxBilling/pull/280) ([vanniktech](https://github.com/vanniktech))
 
 Version 0.10.0 *(2024-08-02)*
 -----------------------------

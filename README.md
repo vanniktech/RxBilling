@@ -50,10 +50,10 @@ The actual [interface](./rxbilling/src/main/kotlin/com/vanniktech/rxbilling/RxBi
 
 This library offers different implementations based on different Google Play Billing library versions.
 
-### Google Play Billing Library v7 implementation
+### Google Play Billing Library v9 implementation
 
 ```groovy
-implementation 'com.vanniktech:rxbilling-google-play-library-v7:0.10.0'
+implementation 'com.vanniktech:rxbilling-google-play-library-v9:0.11.0'
 ```
 
 ```java
@@ -62,53 +62,7 @@ class YourActivity extends Activity {
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate();
-    rxBilling = new com.vanniktech.rxbilling.google.play.library.v7.RxBillingGooglePlayLibraryV7(this);
-    // Use rxBilling to call your desired methods.
-  }
-
-  @Override public void onDestroy() {
-    super.onDestroy();
-    rxBilling.destroy();
-  }
-}
-```
-
-### Google Play Billing Library v6 implementation
-
-```groovy
-implementation 'com.vanniktech:rxbilling-google-play-library-v6:0.10.0'
-```
-
-```java
-class YourActivity extends Activity {
-  private RxBilling rxBilling;
-
-  @Override public void onCreate(Bundle savedInstanceState) {
-    super.onCreate();
-    rxBilling = new com.vanniktech.rxbilling.google.play.library.v6.RxBillingGooglePlayLibraryV6(this);
-    // Use rxBilling to call your desired methods.
-  }
-
-  @Override public void onDestroy() {
-    super.onDestroy();
-    rxBilling.destroy();
-  }
-}
-```
-
-### Google Play Billing Library v5 implementation
-
-```groovy
-implementation 'com.vanniktech:rxbilling-google-play-library-v5:0.10.0'
-```
-
-```java
-class YourActivity extends Activity {
-  private RxBilling rxBilling;
-
-  @Override public void onCreate(Bundle savedInstanceState) {
-    super.onCreate();
-    rxBilling = new com.vanniktech.rxbilling.google.play.library.v5.RxBillingGooglePlayLibraryV5(this);
+    rxBilling = new com.vanniktech.rxbilling.google.play.library.v9.RxBillingGooglePlayLibraryV9(this);
     // Use rxBilling to call your desired methods.
   }
 
@@ -124,7 +78,7 @@ class YourActivity extends Activity {
 There's also a dedicated testing artifact, which provides a [MockRxBilling](./rxbilling-testing/src/main/kotlin/com/vanniktech/rxbilling/testing/MockRxBilling.kt) class.
 
 ```groovy
-implementation 'com.vanniktech:rxbilling-testing:0.10.0'
+implementation 'com.vanniktech:rxbilling-testing:0.11.0'
 ```
 
 # License
