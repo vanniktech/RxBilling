@@ -1,4 +1,4 @@
-package com.vanniktech.rxbilling.google.play.library.v7
+package com.vanniktech.rxbilling.google.play.library.v9
 
 import com.android.billingclient.api.BillingClient.BillingResponseCode
 import org.junit.Assert.assertEquals

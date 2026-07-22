@@ -19,7 +19,7 @@ kotlin {
 
 android {
   compileSdk libs.versions.compileSdk.get() as int
-  namespace "com.vanniktech.rxbilling.google.play.library.v7"
+  namespace "com.vanniktech.rxbilling.google.play.library.v9"
 
   defaultConfig {
     minSdk libs.versions.minSdk.get() as int
@@ -29,7 +29,7 @@ android {
 
 dependencies {
   api(project(":rxbilling"))
-  api(libs.billing7)
+  api(libs.billing9)
 }
 
 dependencies {
