@@ -44,12 +44,4 @@ subprojects {
     mavenCentral()
     google()
   }
-
-  tasks.withType<KotlinCompilationTask<*>>().configureEach {
-    compilerOptions {
-      freeCompilerArgs.addAll(
-        "-Xannotation-default-target=param-property",
-      )
-    }
-  }
 }
